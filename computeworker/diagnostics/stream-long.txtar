@@ -1,0 +1,735 @@
+response.json is the body of response returned by req.sh.
+-- req.sh --
+curl -v -X POST http://localhost:11434/api/generate -d '{
+  "model": "llama3.2:1b",
+  "prompt": "tell me a short story",
+  "stream": true
+}'
+-- response.json --
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.049790648Z","response":"Once","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.099453468Z","response":" upon","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.1343142Z","response":" a","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.167791063Z","response":" time","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.201439941Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.234896328Z","response":" in","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.268504775Z","response":" a","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.302027582Z","response":" small","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.335509339Z","response":" village","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.369138744Z","response":" nestled","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.402433793Z","response":" between","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.435714721Z","response":" two","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.468952228Z","response":" great","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.502583943Z","response":" mountains","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.536527786Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.573169839Z","response":" there","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.619003902Z","response":" lived","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.675305261Z","response":" a","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.723787126Z","response":" young","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.75727744Z","response":" girl","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.791061567Z","response":" named","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.828141599Z","response":" A","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.87415259Z","response":"ria","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.908555088Z","response":".","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.943256448Z","response":" She","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:14.981210418Z","response":" was","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:15.018396569Z","response":" a","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:15.053080468Z","response":" curious","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:15.102147096Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:15.151966331Z","response":" adventurous","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:15.205222496Z","response":" soul","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:15.257549114Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:15.315536777Z","response":" with","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:15.365231246Z","response":" eyes","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:15.422086729Z","response":" that","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:15.475767202Z","response":" spark","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:15.533700395Z","response":"led","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:15.586466302Z","response":" like","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:15.641151519Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:15.699221683Z","response":" stars","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:15.748136393Z","response":" on","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:15.79896981Z","response":" a","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:15.84929851Z","response":" clear","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:15.901612458Z","response":" night","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:15.953179825Z","response":".\n\n","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.004945057Z","response":"A","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.057481312Z","response":"ria","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.113104538Z","response":" lived","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.160122472Z","response":" with","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.207976828Z","response":" her","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.260114597Z","response":" wise","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.309474685Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.358359478Z","response":" kind","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.416577352Z","response":" grandmother","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.466753202Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.517043718Z","response":" who","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.567797941Z","response":" taught","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.612837631Z","response":" her","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.646727195Z","response":" everything","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.680563956Z","response":" she","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.714522831Z","response":" knew","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.748173673Z","response":" about","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.783648022Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.818903699Z","response":" world","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.865582489Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.903294374Z","response":" its","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.941951803Z","response":" secrets","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:16.97750656Z","response":".","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.012095189Z","response":" The","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.046109606Z","response":" grandmother","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.079916555Z","response":" had","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.113737377Z","response":" spent","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.148002754Z","response":" years","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.18200265Z","response":" studying","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.215915427Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.253158094Z","response":" ancient","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.286965276Z","response":" tales","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.320969388Z","response":" of","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.354755863Z","response":" their","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.388550911Z","response":" village","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.425781447Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.459655055Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.493445705Z","response":" passed","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.527624833Z","response":" down","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.563347132Z","response":" to","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.598168337Z","response":" A","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.632098668Z","response":"ria","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.66622577Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.700417706Z","response":" stories","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.734639654Z","response":" of","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.768611025Z","response":" legendary","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.803591151Z","response":" creatures","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.839528357Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.887193279Z","response":" hidden","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.923902771Z","response":" treasures","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.958486957Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:17.993176028Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.028148316Z","response":" forgotten","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.062199907Z","response":" knowledge","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.096246896Z","response":".\n\n","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.130379384Z","response":"One","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.164499868Z","response":" day","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.198572855Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.232809378Z","response":" while","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.266996309Z","response":" exploring","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.301647956Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.335712133Z","response":" attic","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.369644931Z","response":" of","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.403610916Z","response":" their","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.440403771Z","response":" small","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.477705989Z","response":" cottage","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.511981928Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.547295977Z","response":" A","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.581271465Z","response":"ria","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.615339592Z","response":" stumbled","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.650045214Z","response":" upon","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.684384643Z","response":" an","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.718400476Z","response":" old","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.75563381Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.789719306Z","response":" dusty","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.827702566Z","response":" book","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.87427321Z","response":" bound","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.912887636Z","response":" in","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.949336542Z","response":" worn","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:18.984385832Z","response":" leather","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.019296582Z","response":".","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.053509894Z","response":" As","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.087492002Z","response":" she","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.121511904Z","response":" opened","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.15589976Z","response":" it","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.189883238Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.224755716Z","response":" a","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.259362475Z","response":" faint","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.2935051Z","response":" glow","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.327637251Z","response":" eman","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.362128818Z","response":"ated","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.396417223Z","response":" from","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.430645829Z","response":" within","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.465558244Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.499974125Z","response":" illumin","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.534355628Z","response":"ating","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.569222845Z","response":" pages","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.603675417Z","response":" filled","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.637995256Z","response":" with","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.678039355Z","response":" strange","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.712295099Z","response":" symbols","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.747374206Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.781898388Z","response":" illustrations","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.81657316Z","response":" of","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.851380664Z","response":" fantast","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.899997614Z","response":"ical","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.93579779Z","response":" beasts","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:19.971062389Z","response":".\n\n","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:20.006180859Z","response":"The","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:20.040668377Z","response":" grandmother","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:20.074950615Z","response":" noticed","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:20.110353765Z","response":" A","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:20.149915747Z","response":"ria","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:20.190161241Z","response":"'s","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:20.230012297Z","response":" fascination","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:20.265692518Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:20.304836801Z","response":" smiled","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:20.340843954Z","response":" knowingly","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:20.377064274Z","response":".","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:20.424401788Z","response":" \"","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:20.482848301Z","response":"Ah","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:20.534887675Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:20.597366151Z","response":" that","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:20.651146194Z","response":" is","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:20.712153546Z","response":" no","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:20.769576882Z","response":" ordinary","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:20.823446747Z","response":" book","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:20.883332135Z","response":",\"","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:20.935873035Z","response":" she","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:20.989148688Z","response":" said","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:21.043483857Z","response":".","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:21.09313944Z","response":" \"","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:21.151791067Z","response":"It","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:21.202148177Z","response":" holds","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:21.25005291Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:21.308321057Z","response":" secrets","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:21.364458497Z","response":" of","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:21.421916563Z","response":" our","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:21.462940814Z","response":" village","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:21.526961217Z","response":"'s","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:21.582253331Z","response":" past","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:21.639884696Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:21.697056077Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:21.746854533Z","response":" perhaps","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:21.782632427Z","response":" even","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:21.81779601Z","response":" more","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:21.863968901Z","response":".\"\n\n","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:21.903140742Z","response":"A","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:21.95307312Z","response":"ria","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:21.989741432Z","response":"'s","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:22.027887596Z","response":" eyes","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:22.07864595Z","response":" widened","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:22.130438503Z","response":" as","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:22.190154363Z","response":" she","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:22.248312644Z","response":" del","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:22.304999639Z","response":"ved","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:22.369186874Z","response":" into","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:22.423706736Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:22.476614196Z","response":" book","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:22.538497858Z","response":"'s","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:22.590820296Z","response":" mysteries","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:22.641883259Z","response":".","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:22.695699569Z","response":" She","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:22.755194291Z","response":" learned","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:22.807927522Z","response":" about","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:22.861131567Z","response":" a","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:22.91920551Z","response":" hidden","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:22.97541476Z","response":" city","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:23.03296597Z","response":" deep","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:23.093339245Z","response":" within","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:23.160527246Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:23.222338094Z","response":" mountains","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:23.279647328Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:23.336559403Z","response":" where","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:23.394367375Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:23.457156397Z","response":" ancient","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:23.517258133Z","response":" ones","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:23.569746223Z","response":" once","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:23.626284351Z","response":" lived","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:23.682473589Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:23.738306566Z","response":" h","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:23.793474133Z","response":"arn","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:23.848286452Z","response":"essed","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:23.908198675Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:23.968869036Z","response":" power","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:24.025037059Z","response":" of","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:24.079186453Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:24.134050463Z","response":" earth","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:24.188080558Z","response":".","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:24.243305764Z","response":" According","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:24.294769247Z","response":" to","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:24.347908648Z","response":" legend","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:24.400844739Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:24.455346871Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:24.510321855Z","response":" city","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:24.575601518Z","response":" was","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:24.631671513Z","response":" filled","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:24.686860461Z","response":" with","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:24.74061359Z","response":" wonders","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:24.79790276Z","response":" beyond","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:24.854935755Z","response":" A","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:24.91921039Z","response":"ria","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:24.982558285Z","response":"'s","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:25.036716326Z","response":" wil","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:25.088746213Z","response":"dest","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:25.144856447Z","response":" dreams","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:25.205854572Z","response":":","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:25.280265303Z","response":" crystal","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:25.379371802Z","response":" caves","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:25.433259424Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:25.486561014Z","response":" glowing","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:25.546791599Z","response":" forests","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:25.602733462Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:25.661528918Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:25.710908774Z","response":" rivers","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:25.769255323Z","response":" that","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:25.826226166Z","response":" sang","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:25.883096675Z","response":" sweet","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:25.942332801Z","response":" melodies","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:26.001215385Z","response":".\n\n","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:26.057885311Z","response":"In","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:26.108194617Z","response":"tr","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:26.16209313Z","response":"ig","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:26.218634749Z","response":"ued","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:26.276734079Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:26.33379484Z","response":" A","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:26.386482105Z","response":"ria","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:26.438393673Z","response":" convinced","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:26.491149727Z","response":" her","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:26.549695903Z","response":" grandmother","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:26.60205125Z","response":" to","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:26.653582611Z","response":" take","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:26.704739663Z","response":" her","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:26.764425024Z","response":" on","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:26.81639222Z","response":" a","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:26.868860393Z","response":" journey","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:26.92542511Z","response":" to","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:26.985406833Z","response":" find","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:27.039974133Z","response":" this","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:27.099670123Z","response":" f","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:27.150268986Z","response":"abled","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:27.19062399Z","response":" city","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:27.225609285Z","response":".","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:27.260769939Z","response":" Together","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:27.295671255Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:27.330807029Z","response":" they","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:27.366450375Z","response":" packed","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:27.403811034Z","response":" their","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:27.441284453Z","response":" bags","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:27.478545475Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:27.516658472Z","response":" said","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:27.566592985Z","response":" goodbye","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:27.617454094Z","response":" to","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:27.669220742Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:27.720234284Z","response":" village","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:27.778648484Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:27.830669332Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:27.884374377Z","response":" set","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:27.937330551Z","response":" off","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:27.993412078Z","response":" into","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.045345662Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.096732362Z","response":" unknown","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.148259543Z","response":".\n\n","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.200742653Z","response":"As","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.257667736Z","response":" they","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.310304508Z","response":" ventured","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.356708319Z","response":" deeper","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.391691428Z","response":" into","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.429243524Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.468148784Z","response":" mountains","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.503022557Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.538079021Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.573863717Z","response":" air","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.610276096Z","response":" grew","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.649012334Z","response":" thick","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.686141145Z","response":" with","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.722720689Z","response":" an","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.759020497Z","response":" other","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.795078384Z","response":"world","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.831446977Z","response":"ly","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.887718328Z","response":" energy","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.948634855Z","response":".","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:28.996292698Z","response":" The","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:29.03158218Z","response":" trees","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:29.0676481Z","response":" whispered","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:29.102742292Z","response":" ancient","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:29.137618386Z","response":" secrets","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:29.172857608Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:29.208233565Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:29.243075943Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:29.279141845Z","response":" wind","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:29.314833319Z","response":" carried","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:29.352481067Z","response":" whispers","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:29.403369205Z","response":" of","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:29.454085426Z","response":" forgotten","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:29.505378407Z","response":" knowledge","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:29.561219591Z","response":".","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:29.61498507Z","response":" A","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:29.667622508Z","response":"ria","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:29.721473252Z","response":"'s","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:29.773061723Z","response":" heart","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:29.824864645Z","response":" pounded","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:29.884872672Z","response":" with","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:29.937713Z","response":" excitement","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:29.996114349Z","response":" as","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.048764089Z","response":" she","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.100233198Z","response":" followed","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.153114584Z","response":" her","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.199249789Z","response":" grandmother","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.234137629Z","response":" through","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.269108274Z","response":" tre","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.305986438Z","response":"acher","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.346557787Z","response":"ous","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.381448013Z","response":" paths","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.41663639Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.452332033Z","response":" hidden","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.487404363Z","response":" g","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.522582261Z","response":"orges","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.563777782Z","response":".\n\n","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.60673533Z","response":"At","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.667091558Z","response":" last","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.724521322Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.760714531Z","response":" after","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.797823756Z","response":" many","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.840420416Z","response":" days","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.889044568Z","response":" of","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.937212272Z","response":" travel","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:30.975945539Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:31.011851989Z","response":" they","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:31.049739231Z","response":" arrived","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:31.084917817Z","response":" at","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:31.130527703Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:31.186722092Z","response":" edge","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:31.243249464Z","response":" of","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:31.293659495Z","response":" a","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:31.34733289Z","response":" vast","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:31.399315629Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:31.450849238Z","response":" shimmer","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:31.502570962Z","response":"ing","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:31.554129355Z","response":" lake","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:31.607109012Z","response":".","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:31.660185519Z","response":" As","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:31.717417305Z","response":" they","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:31.769101776Z","response":" stepped","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:31.819411642Z","response":" onto","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:31.873652003Z","response":" its","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:31.928205621Z","response":" tranquil","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:31.965031566Z","response":" surface","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.001032369Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.036460889Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.071631179Z","response":" water","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.106732327Z","response":" began","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.141733896Z","response":" to","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.176743441Z","response":" glow","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.211909329Z","response":" with","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.247660349Z","response":" an","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.285085226Z","response":" eth","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.321622471Z","response":"ereal","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.358098241Z","response":" light","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.394080297Z","response":".","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.442422885Z","response":" The","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.498085517Z","response":" air","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.554830698Z","response":" vibr","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.591561598Z","response":"ated","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.630887549Z","response":" with","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.666294061Z","response":" a","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.701546804Z","response":" soft","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.736943098Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.772527413Z","response":" puls","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.808332586Z","response":"ating","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.847294844Z","response":" melody","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.895371358Z","response":" that","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.945681245Z","response":" seemed","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:32.997617323Z","response":" to","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:33.05220695Z","response":" be","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:33.10472671Z","response":" calling","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:33.156679378Z","response":" to","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:33.208827432Z","response":" A","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:33.266212115Z","response":"ria","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:33.317347123Z","response":".\n\n","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:33.371807856Z","response":"With","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:33.428345695Z","response":" her","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:33.485411664Z","response":" grandmother","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:33.537475467Z","response":" by","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:33.591226002Z","response":" her","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:33.644901203Z","response":" side","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:33.696679373Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:33.742406675Z","response":" A","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:33.777661848Z","response":"ria","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:33.813310679Z","response":" g","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:33.848561444Z","response":"azed","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:33.896332844Z","response":" into","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:33.93515406Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:33.972104659Z","response":" lake","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.007974962Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.043456392Z","response":" saw","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.07878021Z","response":" it","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.113958226Z","response":" fill","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.149333906Z","response":" with","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.188621622Z","response":" tiny","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.223758161Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.274993766Z","response":" ir","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.34046841Z","response":"ides","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.3915413Z","response":"cent","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.42694424Z","response":" boats","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.463019396Z","response":" that","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.498787327Z","response":" gl","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.534276905Z","response":"ided","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.569640545Z","response":" across","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.60514759Z","response":" its","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.644534052Z","response":" surface","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.679810235Z","response":".","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.715100815Z","response":" Suddenly","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.757871938Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.80987927Z","response":" one","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.866546439Z","response":" of","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.920665574Z","response":" these","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:34.973720614Z","response":" boats","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:35.028504113Z","response":" drifted","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:35.079972571Z","response":" towards","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:35.136261925Z","response":" them","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:35.188267449Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:35.240181874Z","response":" carrying","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:35.297226812Z","response":" a","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:35.350709252Z","response":" young","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:35.408178165Z","response":" creature","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:35.465918968Z","response":" unlike","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:35.521273583Z","response":" any","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:35.572026067Z","response":" A","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:35.611146579Z","response":"ria","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:35.647539878Z","response":" had","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:35.693452426Z","response":" ever","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:35.730742511Z","response":" seen","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:35.770681402Z","response":":","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:35.806417872Z","response":" a","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:35.842733137Z","response":" being","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:35.897576731Z","response":" made","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:35.933865461Z","response":" entirely","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:35.977185803Z","response":" of","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:36.013870758Z","response":" light","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:36.054071454Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:36.100227453Z","response":" with","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:36.153446133Z","response":" wings","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:36.210498962Z","response":" as","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:36.260983259Z","response":" delicate","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:36.296848188Z","response":" as","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:36.332281057Z","response":" a","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:36.368311393Z","response":" butterfly","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:36.403761822Z","response":"'s","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:36.439430058Z","response":".\n\n","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:36.474925568Z","response":"The","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:36.512411812Z","response":" creature","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:36.54927067Z","response":" introduced","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:36.587297619Z","response":" itself","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:36.642550604Z","response":" as","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:36.695767255Z","response":" Luna","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:36.746425869Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:36.796334183Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:36.850103573Z","response":" guardian","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:36.905758427Z","response":" of","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:36.966111804Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:37.02099911Z","response":" hidden","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:37.07309339Z","response":" city","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:37.125656096Z","response":".","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:37.185231727Z","response":" With","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:37.237698506Z","response":" a","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:37.290168234Z","response":" wave","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:37.342367176Z","response":" of","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:37.402126749Z","response":" her","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:37.443360546Z","response":" hand","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:37.479081153Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:37.515090894Z","response":" Luna","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:37.550569536Z","response":" led","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:37.586321013Z","response":" A","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:37.622132646Z","response":"ria","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:37.658259733Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:37.693875963Z","response":" her","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:37.729316682Z","response":" grandmother","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:37.764991661Z","response":" on","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:37.803562294Z","response":" a","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:37.840719308Z","response":" thrilling","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:37.904759342Z","response":" adventure","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:37.963726875Z","response":" through","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:38.008354332Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:38.044389641Z","response":" crystal","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:38.083865688Z","response":" caves","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:38.119904455Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:38.155554797Z","response":" where","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:38.19119297Z","response":" they","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:38.22736833Z","response":" discovered","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:38.262818138Z","response":" hidden","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:38.298512408Z","response":" pools","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:38.33407133Z","response":" filled","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:38.385711984Z","response":" with","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:38.441360825Z","response":" glitter","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:38.498426802Z","response":"ing","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:38.550427155Z","response":" gems","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:38.602995826Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:38.659483409Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:38.716403834Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:38.768867046Z","response":" glowing","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:38.82182088Z","response":" forests","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:38.88140018Z","response":" that","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:38.937418589Z","response":" hum","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:38.990876377Z","response":"med","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.049112485Z","response":" with","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.099620272Z","response":" ancient","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.151333491Z","response":" magic","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.191073502Z","response":".\n\n","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.226753179Z","response":"As","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.262509436Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.298323126Z","response":" sun","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.334101126Z","response":" began","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.370054679Z","response":" to","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.40606226Z","response":" set","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.441873757Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.478661879Z","response":" Luna","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.516667853Z","response":" guided","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.553744434Z","response":" them","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.590966335Z","response":" to","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.627707556Z","response":" a","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.677377385Z","response":" hidden","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.730756247Z","response":" temple","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.781141682Z","response":" at","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.823442556Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.873290519Z","response":" city","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.910540819Z","response":"'s","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.948140354Z","response":" heart","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:39.986230174Z","response":".","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:40.026205016Z","response":" Inside","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:40.061954648Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:40.101498855Z","response":" A","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:40.137485508Z","response":"ria","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:40.192073913Z","response":" found","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:40.245168464Z","response":" herself","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:40.296485879Z","response":" face","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:40.352105121Z","response":"-to","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:40.404213919Z","response":"-face","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:40.461061171Z","response":" with","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:40.52133719Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:40.577705344Z","response":" legendary","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:40.63120277Z","response":" treasure","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:40.685435928Z","response":" of","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:40.736135409Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:40.799872434Z","response":" ancient","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:40.859144702Z","response":" ones","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:40.919713006Z","response":":","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:40.980043508Z","response":" a","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.022189365Z","response":" chest","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.065685351Z","response":" overflowing","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.102536241Z","response":" with","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.138690015Z","response":" gold","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.174754105Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.210604453Z","response":" jewels","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.247200106Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.283178342Z","response":" but","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.321745708Z","response":" also","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.36055319Z","response":" a","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.39781447Z","response":" book","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.434117952Z","response":" bound","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.469937574Z","response":" in","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.505745056Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.555939092Z","response":" same","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.617715412Z","response":" worn","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.672132466Z","response":" leather","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.7121968Z","response":" as","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.74848094Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.784883889Z","response":" one","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.82532626Z","response":" she","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.873522918Z","response":" had","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.913049752Z","response":" discovered","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.952047432Z","response":" earlier","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:41.993011989Z","response":".\n\n","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:42.035756107Z","response":"The","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:42.092497242Z","response":" book","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:42.142317004Z","response":" was","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:42.195757088Z","response":" titled","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:42.251049037Z","response":" \"","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:42.307755457Z","response":"The","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:42.358966878Z","response":" Heart","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:42.412395276Z","response":" of","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:42.464652301Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:42.518464778Z","response":" Earth","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:42.571022809Z","response":",\"","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:42.623241197Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:42.675650746Z","response":" its","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:42.734867241Z","response":" pages","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:42.790207599Z","response":" held","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:42.846484812Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:42.895356839Z","response":" secrets","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:42.934652706Z","response":" of","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:42.973961609Z","response":" their","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.010756721Z","response":" village","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.047358967Z","response":"'s","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.083633662Z","response":" connection","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.121523982Z","response":" to","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.161613812Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.199689196Z","response":" land","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.237318323Z","response":" itself","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.274993631Z","response":".","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.315050179Z","response":" A","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.377753956Z","response":"ria","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.436984479Z","response":" knew","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.495332187Z","response":" that","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.531722883Z","response":" this","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.568052526Z","response":" discovery","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.60456024Z","response":" would","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.644913098Z","response":" change","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.681692881Z","response":" her","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.718421155Z","response":" life","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.754675329Z","response":" forever","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.790715237Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.827707703Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.886684036Z","response":" that","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:43.940704848Z","response":" she","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:44.002611755Z","response":" would","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:44.055645695Z","response":" carry","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:44.113023403Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:44.165555259Z","response":" wisdom","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:44.220282079Z","response":" of","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:44.273193864Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:44.325862271Z","response":" ancient","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:44.379962234Z","response":" ones","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:44.432658445Z","response":" with","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:44.487712618Z","response":" her","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:44.540086396Z","response":" always","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:44.592421857Z","response":".\n\n","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:44.65076604Z","response":"From","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:44.695124502Z","response":" that","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:44.731482253Z","response":" day","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:44.76784582Z","response":" forward","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:44.804176173Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:44.840535134Z","response":" A","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:44.890282316Z","response":"ria","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:44.932294639Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:44.969066644Z","response":" Luna","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.010265082Z","response":" became","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.04667013Z","response":" inse","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.082856075Z","response":"parable","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.118967984Z","response":" companions","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.155089547Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.193324699Z","response":" exploring","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.251015432Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.311433561Z","response":" world","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.358484176Z","response":" together","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.394766333Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.431184011Z","response":" sharing","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.467769518Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.504215297Z","response":" knowledge","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.544569487Z","response":" they","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.58597985Z","response":" had","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.623289433Z","response":" uncovered","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.659789011Z","response":".","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.696893148Z","response":" And","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.745158668Z","response":" though","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.807845543Z","response":" they","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.866302926Z","response":" traveled","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.930917498Z","response":" far","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:45.986468569Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:46.051512642Z","response":" wide","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:46.104238038Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:46.165635003Z","response":" their","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:46.219370127Z","response":" hearts","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:46.27265907Z","response":" remained","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:46.329574788Z","response":" rooted","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:46.387111112Z","response":" in","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:46.444217914Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:46.496768416Z","response":" village","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:46.542368874Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:46.578618245Z","response":" where","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:46.616043847Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:46.658607643Z","response":" secrets","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:46.703147683Z","response":" of","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:46.744557778Z","response":" their","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:46.782335338Z","response":" ancestors","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:46.818844987Z","response":" waited","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:46.867430125Z","response":" to","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:46.906027642Z","response":" be","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:46.944312943Z","response":" redis","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:46.983225481Z","response":"covered","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:47.020206084Z","response":".","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T13:21:47.060983968Z","response":"","done":true,"done_reason":"stop","context":[128006,9125,128007,271,38766,1303,33025,2696,25,6790,220,2366,18,271,128009,128006,882,128007,271,73457,757,264,2875,3446,128009,128006,78191,128007,271,12805,5304,264,892,11,304,264,2678,14458,89777,1990,1403,2294,24405,11,1070,12439,264,3995,3828,7086,362,4298,13,3005,574,264,22999,323,68188,13836,11,449,6548,430,15541,839,1093,279,9958,389,264,2867,3814,382,32,4298,12439,449,1077,24219,323,3169,39284,11,889,15972,1077,4395,1364,7020,922,279,1917,323,1202,24511,13,578,39284,1047,7543,1667,21630,279,14154,37565,315,872,14458,11,323,5946,1523,311,362,4298,279,7493,315,28812,20566,11,8340,59949,11,323,25565,6677,382,4054,1938,11,1418,24919,279,74721,315,872,2678,46722,11,362,4298,50157,5304,459,2362,11,77973,2363,6965,304,24634,18012,13,1666,1364,9107,433,11,264,38678,37066,69239,660,505,2949,11,44087,1113,6959,10409,449,15234,18210,323,45543,315,64979,950,57536,382,791,39284,14000,362,4298,596,75444,323,31645,68113,13,330,25797,11,430,374,912,19664,2363,1359,1364,1071,13,330,2181,10187,279,24511,315,1057,14458,596,3347,11,323,8530,1524,810,2266,32,4298,596,6548,86988,439,1364,1624,2111,1139,279,2363,596,57700,13,3005,9687,922,264,8340,3363,5655,2949,279,24405,11,1405,279,14154,6305,3131,12439,323,305,1923,22456,279,2410,315,279,9578,13,10771,311,13314,11,279,3363,574,10409,449,40164,7953,362,4298,596,31331,5086,19226,25,26110,66664,11,49592,36658,11,323,36617,430,29340,10437,90113,382,644,376,343,3340,11,362,4298,22954,1077,39284,311,1935,1077,389,264,11879,311,1505,420,282,2364,3363,13,32255,11,814,19937,872,18381,11,1071,47555,311,279,14458,11,323,743,1022,1139,279,9987,382,2170,814,99507,19662,1139,279,24405,11,279,3805,14264,12314,449,459,1023,14957,398,4907,13,578,12690,58366,14154,24511,11,323,279,10160,11953,89248,315,25565,6677,13,362,4298,596,4851,95579,449,28361,439,1364,8272,1077,39284,1555,4353,11252,788,13006,323,8340,342,81875,382,1688,1566,11,1306,1690,2919,315,5944,11,814,11721,520,279,6964,315,264,13057,11,76461,287,22553,13,1666,814,25319,8800,1202,68040,7479,11,279,3090,6137,311,37066,449,459,8537,44353,3177,13,578,3805,17358,660,449,264,8579,11,56037,1113,62684,430,9508,311,387,8260,311,362,4298,382,2409,1077,39284,555,1077,3185,11,362,4298,342,28109,1139,279,22553,323,5602,433,5266,449,13987,11,6348,3422,1189,32731,430,2840,4591,4028,1202,7479,13,58801,11,832,315,1521,32731,92662,7119,1124,11,15691,264,3995,17661,20426,904,362,4298,1047,3596,3970,25,264,1694,1903,11622,315,3177,11,449,27296,439,36301,439,264,56269,596,382,791,17661,11784,5196,439,50905,11,279,47132,315,279,8340,3363,13,3161,264,12330,315,1077,1450,11,50905,6197,362,4298,323,1077,39284,389,264,57399,18427,1555,279,26110,66664,11,1405,814,11352,8340,34239,10409,449,55251,287,43258,11,323,279,49592,36658,430,2854,2106,449,14154,11204,382,2170,279,7160,6137,311,743,11,50905,33687,1124,311,264,8340,27850,520,279,3363,596,4851,13,28468,11,362,4298,1766,11937,3663,4791,30188,449,279,28812,32726,315,279,14154,6305,25,264,15489,94315,449,6761,323,86131,11,719,1101,264,2363,6965,304,279,1890,24634,18012,439,279,832,1364,1047,11352,6931,382,791,2363,574,25891,330,791,18449,315,279,9420,1359,323,1202,6959,5762,279,24511,315,872,14458,596,3717,311,279,4363,5196,13,362,4298,7020,430,420,18841,1053,2349,1077,2324,16058,11,323,430,1364,1053,6920,279,24278,315,279,14154,6305,449,1077,2744,382,3915,430,1938,4741,11,362,4298,323,50905,6244,54682,50256,41957,11,24919,279,1917,3871,323,11821,279,6677,814,1047,43522,13,1628,3582,814,31796,3117,323,7029,11,872,23492,14958,41976,304,279,14458,11,1405,279,24511,315,872,38618,30315,311,387,21540,21468,13],"total_duration":33090020471,"load_duration":22506164,"prompt_eval_count":30,"prompt_eval_duration":54000000,"eval_count":727,"eval_duration":33012000000}

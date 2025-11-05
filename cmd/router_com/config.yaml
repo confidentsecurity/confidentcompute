@@ -1,0 +1,31 @@
+http:
+  port: "${PORT:-8081}"
+evidence:
+  timeout: ${EVIDENCE_TIMEOUT:-30s}
+models:
+  - llama3.2:1b
+  - qwen2:1.5b-instruct
+  - gemma3:1b
+router_com:
+  tpm:
+    device: "${TPM_DEVICE:-/dev/tpmrm0}"
+    simulate: ${SIMULATE_TPM:-false}
+    rek_handle: ${REK_HANDLE:-0x81000002}
+    simulator_cmd_address: ${SIMULATOR_CMD_ADDRESS:-}
+    simulator_platform_address: ${SIMULATOR_PLATFORM_ADDRESS:-}
+  worker:
+    binary_path: "${WORKER_BIN_PATH:-./cmd/compute_worker/compute_worker}"
+    llm_base_url: "${LLM_BASE_URL:-http://localhost:11434}"
+    badge_public_key: "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUNvd0JRWURLMlZ3QXlFQTFKNXJhQTdEZTQ0elFSRVpxU21BbkRMK1RObjFPUUROZW1sWmc4eWc3azg9Ci0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQo="
+router_agent:
+  tags:
+    - llm
+    - ollama
+  node_target_url: "http://${COMPUTE_HOST:-localhost}:${PORT:-8081}/"
+  node_healthcheck_url: "http://${COMPUTE_HOST:-localhost}:${PORT:-8081}/_health"
+  router_base_url: "${ROUTER_ADDRESS:-http://localhost:8000}"
+  # if you want to verify that the client detects tampered evidence
+  # pass the router registration through the tampering proxy by
+  # using the following router_base_url.
+  #
+  # router_base_url: "http://localhost:8099"

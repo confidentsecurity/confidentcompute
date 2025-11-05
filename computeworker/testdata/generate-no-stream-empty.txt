@@ -1,0 +1,12 @@
+Manually adapted response from the req.sh call:
+- Response changed to empty string.
+- Eval count set to 0.
+- Context set to empty array.
+-- req.sh --
+curl -v -X POST http://localhost:11434/api/generate -d '{
+"model": "llama3.2:1b",
+"prompt": "tell me a joke",
+"stream": false
+}'
+-- response.json --
+{"model":"llama3.2:1b","created_at":"2025-04-16T10:00:02.683043699Z","response":"","done":true,"done_reason":"stop","context":[],"total_duration":1888781479,"load_duration":20011145,"prompt_eval_count":29,"prompt_eval_duration":46000000,"eval_count":0,"eval_duration":1822000000}

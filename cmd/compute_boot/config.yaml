@@ -1,0 +1,24 @@
+ollama:
+  skip: ${OLLAMA_INIT_SKIP:-false}
+  models:
+    - "llama3.2:1b"
+    - "qwen2:1.5b-instruct"
+    - "gemma3:1b"
+  local_dev: true
+  url: "http://localhost:11434"
+tpm:
+  primary_key_handle: 0x81000001
+  child_key_handle: 0x81000002
+  rek_creation_ticket_handle: 0x01c0000A
+  rek_creation_hash_handle: 0x01c0000B
+  attestation_key_handle: 0x81000003
+  tpm_type: Simulator
+  simulator_cmd_address: ${SIMULATOR_CMD_ADDRESS:-}
+  simulator_platform_address: ${SIMULATOR_PLATFORM_ADDRESS:-}
+attestation:
+  fake_secret: "${FAKE_ATTESTATION_SECRET:-123456}"
+gpu:
+  required: false
+  attestation_mode: none
+transparency:
+  image_sigstore_bundle: "${COMPUTE_IMAGE_SIGSTORE_BUNDLE:-}"

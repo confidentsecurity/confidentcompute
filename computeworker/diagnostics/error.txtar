@@ -1,0 +1,8 @@
+-- req.sh --
+curl -v -X POST http://localhost:11434/api/generate -d '{
+  "model": "NON_EXISTING",
+  "prompt": "tell me a joke",
+  "stream": false
+}'
+-- response.json --
+{"error":"model 'NON_EXISTING' not found"}

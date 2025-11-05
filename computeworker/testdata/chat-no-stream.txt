@@ -1,0 +1,14 @@
+response.json is the body of the following curl call:
+-- req.sh --
+curl -v -X POST http://localhost:11434/api/chat -d '{
+"model": "llama3.2:1b",
+"messages": [
+    {
+        "role": "user",
+        "content": "tell me a joke"
+    }
+],
+"stream": false
+}'
+-- response.json --
+{"model":"llama3.2:1b","created_at":"2025-05-20T14:54:38.626590259Z","message":{"role":"assistant","content":"A man walked into a library and asked the librarian, \"Do you have any books on Pavlov's dogs and Schrödinger's cat?\" \n\nThe librarian replied, \"It rings a bell, but I'm not sure if it's here or not.\""},"done_reason":"stop","done":true,"total_duration":1935758063,"load_duration":16009497,"prompt_eval_count":29,"prompt_eval_duration":43000000,"eval_count":55,"eval_duration":1867000000}

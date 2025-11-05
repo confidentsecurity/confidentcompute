@@ -1,0 +1,62 @@
+response.json is the body of response returned by req.sh.
+-- req.sh --
+curl -v -X POST http://localhost:11434/api/generate -d '{
+"model": "llama3.2:1b",
+"prompt": "tell me a joke",
+"stream": true
+}'
+-- response.json --
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:00.205017922Z","response":"A","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:00.257690081Z","response":" man","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:00.306463744Z","response":" walked","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:00.351704944Z","response":" into","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:00.396002522Z","response":" a","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:00.44138902Z","response":" library","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:00.490467113Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:00.535860169Z","response":" asked","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:00.578757229Z","response":" the","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:00.630066807Z","response":" librarian","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:00.674149968Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:00.721606643Z","response":" \"","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:00.769873081Z","response":"Do","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:00.814676009Z","response":" you","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:00.867933374Z","response":" have","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:00.912957774Z","response":" any","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:00.957745656Z","response":" books","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:01.00201521Z","response":" on","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:01.039919855Z","response":" Pav","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:01.08943392Z","response":"lov","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:01.134884138Z","response":"'s","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:01.179503005Z","response":" dogs","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:01.223027702Z","response":" and","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:01.269055898Z","response":" Sch","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:01.312029074Z","response":"r","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:01.358843016Z","response":"ö","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:01.404839672Z","response":"d","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:01.449955141Z","response":"inger","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:01.49571004Z","response":"'s","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:01.547619365Z","response":" cat","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:01.595996351Z","response":"?\"","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:01.647715572Z","response":" The","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:01.695980961Z","response":" librarian","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:01.746160741Z","response":" replied","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:01.791656699Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:01.832299108Z","response":" \"","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:01.884550807Z","response":"It","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:01.930663581Z","response":" rings","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:01.97535113Z","response":" a","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:02.020093543Z","response":" bell","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:02.06534626Z","response":",","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:02.110529031Z","response":" but","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:02.1576597Z","response":" I","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:02.205304814Z","response":"'m","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:02.245068268Z","response":" not","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:02.294493192Z","response":" sure","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:02.340760649Z","response":" if","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:02.38189979Z","response":" it","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:02.428898072Z","response":"'s","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:02.473978605Z","response":" here","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:02.512486362Z","response":" or","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:02.564918014Z","response":" not","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:02.609776831Z","response":".\"","done":false}
+{"model":"llama3.2:1b","created_at":"2025-04-16T11:00:02.649829507Z","response":"","done":true,"done_reason":"stop","context":[128006,9125,128007,271,38766,1303,33025,2696,25,6790,220,2366,18,271,128009,128006,882,128007,271,73457,757,264,22380,128009,128006,78191,128007,271,32,893,15203,1139,264,6875,323,4691,279,95307,11,330,5519,499,617,904,6603,389,43856,36247,596,12875,323,5124,81,3029,67,5248,596,8415,7673,578,95307,20592,11,330,2181,25562,264,29519,11,719,358,2846,539,2771,422,433,596,1618,477,539,1210],"total_duration":4140001924,"load_duration":1296321204,"prompt_eval_count":29,"prompt_eval_duration":396000000,"eval_duration":2445000000}
