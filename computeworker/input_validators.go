@@ -618,7 +618,8 @@ func (v BodyValidator) ValidateWithBadge(r *http.Request, b *credentialing.Badge
 	}
 
 	// If the deserialized request body was mutated, we should re-serialize it and
-	// 	if dirty {
+	// replace the original request body with the mutated one.
+	if dirty {
 		body, err = json.Marshal(requestBody)
 		if err != nil {
 			return newValidationError(ErrInvalidJSON, "failed to encode request body: "+err.Error())
