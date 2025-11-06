@@ -96,8 +96,8 @@ func collectEvidence(_ *AttestationConfig, tpmCfg *TPMConfig, tpmDevice TPMDevic
 			}
 
 			result = append(result, collateralEvidence)
-		case Simulator, InMemorySimulator:
-			// these two do nothing, but we have to have this comment for revive:useless-fallthrough
+		case Simulator, InMemorySimulator, QEMU:
+			// these do nothing, but we have to have this comment for revive:useless-fallthrough
 			fallthrough
 		default:
 			return nil, fmt.Errorf("unsupported TPM type for procedure: %s", tpmCfg.TPMType)
@@ -132,8 +132,8 @@ func collectEvidence(_ *AttestationConfig, tpmCfg *TPMConfig, tpmDevice TPMDevic
 			}
 
 			result = append(result, teeEvidencePiece)
-		case Simulator, InMemorySimulator:
-			// these two do nothing, but we have to have this comment for revive:useless-fallthrough
+		case Simulator, InMemorySimulator, QEMU:
+			// these do nothing, but we have to have this comment for revive:useless-fallthrough
 			fallthrough
 		default:
 			return nil, fmt.Errorf("unsupported TPM type for procedure: %s", tpmCfg.TPMType)
@@ -176,8 +176,8 @@ func collectEvidence(_ *AttestationConfig, tpmCfg *TPMConfig, tpmDevice TPMDevic
 			return nil, fmt.Errorf("azure ak certificate evidence failed: %w", err)
 		}
 		result = append(result, akCertificateSignedEvidence)
-	case Simulator, InMemorySimulator:
-		// these two do nothing, but we have to have this comment for revive:useless-fallthrough
+	case Simulator, InMemorySimulator, QEMU:
+		// these do nothing, but we have to have this comment for revive:useless-fallthrough
 		fallthrough
 	default:
 		return nil, fmt.Errorf("unsupported TPM type for procedure: %s", tpmCfg.TPMType)

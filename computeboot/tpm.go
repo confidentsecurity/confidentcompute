@@ -42,14 +42,15 @@ const (
 	Azure
 	Simulator
 	InMemorySimulator
+	QEMU
 )
 
 func (t TPMType) IsSimulator() bool {
-	return t == Simulator || t == InMemorySimulator
+	return t == Simulator || t == InMemorySimulator || t == QEMU
 }
 
 func (t TPMType) String() string {
-	return [...]string{"GCE", "Azure", "Simulator", "InMemorySimulator"}[t]
+	return [...]string{"GCE", "Azure", "Simulator", "InMemorySimulator", "QEMU"}[t]
 }
 
 func (t TPMType) MarshalYAML() (any, error) {
@@ -71,6 +72,8 @@ func (t *TPMType) UnmarshalYAML(value *yaml.Node) error {
 		*t = Simulator
 	case "InMemorySimulator":
 		*t = InMemorySimulator
+	case "QEMU":
+		*t = QEMU
 	default:
 		return fmt.Errorf("unknown TPMType: %s", s)
 	}
@@ -116,7 +119,7 @@ func NewTPMOperatorWithConfig(cfg *TPMConfig) (*TPMOperator, error) {
 		o.device = NewTPMSimulator(cfg.SimulatorCmdAddress, cfg.SimulatorPlatformAddress)
 	case InMemorySimulator:
 		o.device = NewTPMInMemorySimulator()
-	case GCE, Azure:
+	case GCE, Azure, QEMU:
 		o.device = NewTPMRealDevice()
 	default:
 		return nil, fmt.Errorf("invalid tpm type: %v", o.tpmType)
