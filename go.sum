@@ -757,6 +757,8 @@ github.com/codahale/rfc6979 v0.0.0-20141003034818-6a90f24967eb h1:EDmT6Q9Zs+SbUo
 github.com/codahale/rfc6979 v0.0.0-20141003034818-6a90f24967eb/go.mod h1:ZjrT6AXHbDs86ZSdt/osfBi5qfexBrKUdONk989Wnk4=
 github.com/confidentsecurity/go-nvtrust v0.2.1 h1:JFuiBHIcnh/nrNTGAAWRtqkZ5YYCDNP8UtbvOVt4hBg=
 github.com/confidentsecurity/go-nvtrust v0.2.1/go.mod h1:f0C83RCmNBwL0vT8bVZ/+sQYVAbjwLSsw5GuA/AYi2c=
+github.com/confidentsecurity/go-sev-guest v0.0.0-20251023021740-e3068f976a01 h1:2V10h/Ms3uCqzVV6c5KuiO74J4ktPa9VAg+1lzPdaS8=
+github.com/confidentsecurity/go-sev-guest v0.0.0-20251023021740-e3068f976a01/go.mod h1:kVnKMmh90uTdpqrEsJP9mQCkddeTSvbkWJXbcwEXrjQ=
 github.com/coreos/go-oidc/v3 v3.16.0 h1:qRQUCFstKpXwmEjDQTIbyY/5jF00+asXzSkmkoa/mow=
 github.com/coreos/go-oidc/v3 v3.16.0/go.mod h1:wqPbKFrVnE90vty060SB40FCJ8fTHTxSwyXJqZH+sI8=
 github.com/coreos/go-systemd/v22 v22.6.0 h1:aGVa/v8B7hpb0TKl0MWoAavPDmHvobFe5R5zn0bCJWo=
@@ -969,8 +971,6 @@ github.com/google/go-containerregistry v0.20.6 h1:cvWX87UxxLgaH76b4hIvya6Dzz9qHB
 github.com/google/go-containerregistry v0.20.6/go.mod h1:T0x8MuoAoKX/873bkeSfLD2FAkwCDf9/HZgsFJ02E2Y=
 github.com/google/go-eventlog v0.0.2 h1:Q3XESKw1xuO7+U37PmFGmteQqprL8U5/linAiuy3oIY=
 github.com/google/go-eventlog v0.0.2/go.mod h1:7huE5P8w2NTObSwSJjboHmB7ioBNblkijdzoVa2skfQ=
-github.com/google/go-sev-guest v0.14.1 h1:j/DXy9jk1qSW/dEV9vDiQnhAVFD1zqnWNVu6p1J0Jgo=
-github.com/google/go-sev-guest v0.14.1/go.mod h1:SK9vW+uyfuzYdVN0m8BShL3OQCtXZe/JPF7ZkpD3760=
 github.com/google/go-tdx-guest v0.3.2-0.20250814004405-ffb0869e6f4d h1:Ff8goEP/ue2/rZT5qyoRicuySCYDbAXEZS8Cf1fgsUo=
 github.com/google/go-tdx-guest v0.3.2-0.20250814004405-ffb0869e6f4d/go.mod h1:uHy3VaNXNXhl0fiPxKqTxieeouqQmW6A0EfLcaeCYBk=
 github.com/google/go-tpm v0.9.6 h1:Ku42PT4LmjDu1H5C5ISWLlpI1mj+Zq7sPGKoRw2XROA=

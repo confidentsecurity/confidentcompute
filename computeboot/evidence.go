@@ -49,6 +49,7 @@ func collectEvidence(_ *AttestationConfig, tpmCfg *TPMConfig, tpmDevice TPMDevic
 	if err != nil {
 		return nil, err
 	}
+
 	switch teeType {
 	case ev.Tdx:
 		switch tpmCfg.TPMType {
@@ -132,8 +133,21 @@ func collectEvidence(_ *AttestationConfig, tpmCfg *TPMConfig, tpmDevice TPMDevic
 			}
 
 			result = append(result, teeEvidencePiece)
-		case Simulator, InMemorySimulator, QEMU:
-			// these do nothing, but we have to have this comment for revive:useless-fallthrough
+		case QEMU:
+			teeAttestor, err := attest.NewBareMetalSEVSNPTEEAttestor(make([]byte, 64))
+			if err != nil {
+				return nil, err
+			}
+
+			teeEvidencePiece, err := teeAttestor.CreateSignedEvidence(context.Background())
+
+			if err != nil {
+				return nil, fmt.Errorf("qemu sevsnp create evidence failed: %w", err)
+			}
+
+			result = append(result, teeEvidencePiece)
+		case Simulator, InMemorySimulator:
+			// these two do nothing, but we have to have this comment for revive:useless-fallthrough
 			fallthrough
 		default:
 			return nil, fmt.Errorf("unsupported TPM type for procedure: %s", tpmCfg.TPMType)
@@ -176,8 +190,17 @@ func collectEvidence(_ *AttestationConfig, tpmCfg *TPMConfig, tpmDevice TPMDevic
 			return nil, fmt.Errorf("azure ak certificate evidence failed: %w", err)
 		}
 		result = append(result, akCertificateSignedEvidence)
-	case Simulator, InMemorySimulator, QEMU:
-		// these do nothing, but we have to have this comment for revive:useless-fallthrough
+	case QEMU:
+		// instead of attesting the AK certificate, we include the AK TPMT public area in the evidence,
+		// and verify that it matches the vTPM TPMT public area in the SEV-SNP services manifest
+		tpmtAttestor := attest.NewTPMTPublicAttestor(tpm, tpmutil.Handle(tpmCfg.AttestationKeyHandle), ev.AkTPMTPublic)
+		akTPMPTEvidence, err := tpmtAttestor.CreateSignedEvidence(context.Background())
+		if err != nil {
+			return nil, fmt.Errorf("tpmt create signed evidence failed: %w", err)
+		}
+		result = append(result, akTPMPTEvidence)
+	case Simulator, InMemorySimulator:
+		// these two do nothing, but we have to have this comment for revive:useless-fallthrough
 		fallthrough
 	default:
 		return nil, fmt.Errorf("unsupported TPM type for procedure: %s", tpmCfg.TPMType)
@@ -202,7 +225,7 @@ func collectEvidence(_ *AttestationConfig, tpmCfg *TPMConfig, tpmDevice TPMDevic
 	}
 	result = append(result, certifyREKSignedEvidence)
 
-	tpmtAttestor := attest.NewTPMTPublicAttestor(tpm, tpmutil.Handle(tpmCfg.ChildKeyHandle))
+	tpmtAttestor := attest.NewTPMTPublicAttestor(tpm, tpmutil.Handle(tpmCfg.ChildKeyHandle), ev.TpmtPublic)
 	tpmtSignedEvidence, err := tpmtAttestor.CreateSignedEvidence(context.Background())
 	if err != nil {
 		return nil, fmt.Errorf("tpmt create signed evidence failed: %w", err)
@@ -218,6 +241,7 @@ func collectEvidence(_ *AttestationConfig, tpmCfg *TPMConfig, tpmDevice TPMDevic
 	}
 
 	decodedBundle, err := base64.StdEncoding.DecodeString(tlogCfg.ImageSigstoreBundle)
+
 	if err != nil {
 		return nil, fmt.Errorf("failed to base64 decode image sigstore bundle: %w", err)
 	}
@@ -259,9 +283,9 @@ func collectEvidence(_ *AttestationConfig, tpmCfg *TPMConfig, tpmDevice TPMDevic
 	if err != nil {
 		return nil, fmt.Errorf("event log attestator create signed evidence failed: %w", err)
 	}
+	result = append(result, eventLogEvidence)
 
 	result = append(result, tpmQuoteEvidence)
-	result = append(result, eventLogEvidence)
 	return result, nil
 }
 

@@ -148,18 +148,56 @@ func (t *TPMOperator) SetupAttestationKey() error {
 		return fmt.Errorf("could not connect to TPM: %w", err)
 	}
 
-	if t.tpmType == GCE {
+	switch t.tpmType {
+	case GCE:
 		err = MoveGCEAKToHandle(thetpm, tpm2.TPMHandle(t.attestationKeyHandle))
 		if err != nil {
 			return fmt.Errorf("could not move GCE AK to handle: %w", err)
 		}
-	}
+	case QEMU:
+		// Create new Attestation Key and persist it to the address specified in the config
+		bareMetalTPMTPublic := tpm2.New2B(cstpm.GetRSASSASigningEKTemplate())
 
-	if t.tpmType.IsSimulator() {
-		// can only be used with fake attestation as this key won't trace back to a trusted party.
-		err = setupSimulatorAttestationKey(thetpm, t.attestationKeyHandle)
+		pcrSelection := tpm2.TPMLPCRSelection{
+			PCRSelections: []tpm2.TPMSPCRSelection{},
+		}
+		createAKCommand := tpm2.CreatePrimary{
+			PrimaryHandle: tpm2.TPMRHEndorsement,
+			InPublic:      bareMetalTPMTPublic,
+			CreationPCR:   pcrSelection,
+		}
+
+		createAKResponse, err := createAKCommand.Execute(thetpm)
 		if err != nil {
-			return fmt.Errorf("could not setup simulator AK for handle: %w", err)
+			return fmt.Errorf("failed to create attestation key: %w", err)
+		}
+
+		flushPrimaryContext := tpm2.FlushContext{FlushHandle: createAKResponse.ObjectHandle}
+		defer func() {
+			if _, err := flushPrimaryContext.Execute(thetpm); err != nil {
+				slog.Error("Failed to flush context", "err", err)
+			}
+		}()
+
+		err = cstpm.MaybeClearPersistentHandle(thetpm, t.attestationKeyHandle)
+		if err != nil {
+			return fmt.Errorf("error clearing handle 0x%x: %w", t.attestationKeyHandle, err)
+		}
+
+		err = cstpm.PersistObject(
+			thetpm,
+			tpmutil.Handle(createAKResponse.ObjectHandle),
+			t.attestationKeyHandle)
+		if err != nil {
+			return fmt.Errorf("could not persist attestation key to 0x%x: %w", t.attestationKeyHandle, err)
+		}
+	default:
+		if t.tpmType.IsSimulator() {
+			// can only be used with fake attestation as this key won't trace back to a trusted party.
+			err = setupSimulatorAttestationKey(thetpm, t.attestationKeyHandle)
+			if err != nil {
+				return fmt.Errorf("could not setup simulator AK for handle: %w", err)
+			}
 		}
 	}
 

@@ -3,6 +3,7 @@ module github.com/confidentsecurity/confidentcompute
 go 1.25.1
 
 
+
 require (
 	cloud.google.com/go/compute v1.49.1
 	cloud.google.com/go/storage v1.57.0

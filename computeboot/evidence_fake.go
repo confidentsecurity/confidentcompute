@@ -42,7 +42,7 @@ func collectEvidence(cfg *AttestationConfig, tpmCfg *TPMConfig, tpmDevice TPMDev
 	}
 
 	// Piece 1: TPMTPublic of the AK.
-	akTPMPT := attest.NewTPMTPublicAttestor(tpm, tpmutil.Handle(tpmCfg.AttestationKeyHandle))
+	akTPMPT := attest.NewTPMTPublicAttestor(tpm, tpmutil.Handle(tpmCfg.AttestationKeyHandle), ev.TpmtPublic)
 	akTPMPTEvidence, err := akTPMPT.CreateSignedEvidence(context.Background())
 	if err != nil {
 		return nil, fmt.Errorf("failed to attest ak: %w", err)
@@ -75,7 +75,7 @@ func collectEvidence(cfg *AttestationConfig, tpmCfg *TPMConfig, tpmDevice TPMDev
 	result = append(result, tpmQuoteEvidence)
 
 	// Piece 4: TPMTPublic of the REK.
-	rekTMPT := attest.NewTPMTPublicAttestor(tpm, tpmutil.Handle(tpmCfg.ChildKeyHandle))
+	rekTMPT := attest.NewTPMTPublicAttestor(tpm, tpmutil.Handle(tpmCfg.ChildKeyHandle), ev.TpmtPublic)
 	rekTPMPTEvidence, err := rekTMPT.CreateSignedEvidence(context.Background())
 	if err != nil {
 		return nil, fmt.Errorf("failed to attest rek: %w", err)
