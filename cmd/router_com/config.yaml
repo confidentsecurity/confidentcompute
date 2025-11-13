@@ -20,7 +20,7 @@ router_com:
 router_agent:
   tags:
     - llm
-    - ollama
+    - "engine=ollama"
   node_target_url: "http://${COMPUTE_HOST:-localhost}:${PORT:-8081}/"
   node_healthcheck_url: "http://${COMPUTE_HOST:-localhost}:${PORT:-8081}/_health"
   router_base_url: "${ROUTER_ADDRESS:-http://localhost:8000}"

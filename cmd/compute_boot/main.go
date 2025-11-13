@@ -40,8 +40,8 @@ func main() {
 
 // Config is compute_boot service config
 type Config struct {
-	// Ollama is config for talking to Ollama
-	Ollama *computeboot.OllamaConfig `yaml:"ollama"`
+	// InferenceEngine is config for talking to the inference engine (eg. ollama, vllm)
+	InferenceEngine *computeboot.InferenceEngineConfig `yaml:"inference_engine"`
 	// TPM is config for talking to the TPM
 	TPM *computeboot.TPMConfig `yaml:"tpm"`
 	// Attestation is config for the attestations compute boot creates
@@ -71,7 +71,7 @@ func run(ctx context.Context) int {
 	}
 
 	cfg := &Config{
-		Ollama:             &computeboot.OllamaConfig{},
+		InferenceEngine:    &computeboot.InferenceEngineConfig{},
 		TPM:                &computeboot.TPMConfig{},
 		Attestation:        &computeboot.AttestationConfig{},
 		Evidence:           evidence.DefaultSenderConfig(),
@@ -124,9 +124,9 @@ func run(ctx context.Context) int {
 		return 1
 	}
 
-	// initialize ollama after GPU is ready
-	if err := initializeOllama(ctx, cfg.Ollama); err != nil {
-		slog.Error("Ollama initialization failed", "error", err)
+	// initialize inference engine after GPU is ready
+	if err := initializeInferenceEngine(ctx, cfg.InferenceEngine); err != nil {
+		slog.Error("inference engine initialization failed", "error", err)
 		return 1
 	}
 
@@ -161,27 +161,27 @@ func setupTPM(ctx context.Context, tpmOperator *computeboot.TPMOperator) error {
 	return nil
 }
 
-func initializeOllama(ctx context.Context, ollamaConfig *computeboot.OllamaConfig) error {
-	if ollamaConfig.Skip {
-		slog.WarnContext(ctx, "skipping ollama initialization")
+func initializeInferenceEngine(ctx context.Context, engineConfig *computeboot.InferenceEngineConfig) error {
+	if engineConfig.Skip {
+		slog.WarnContext(ctx, "skipping inference engine initialization")
 		return nil
 	}
 
-	ollama := computeboot.NewOllamaInitializerWithConfig(ollamaConfig)
+	engine := computeboot.NewInferenceEngineInitializerWithConfig(engineConfig)
 
 	// the reload uses a linux command
-	if !ollamaConfig.LocalDev {
-		if err := ollama.ReloadService(ctx); err != nil {
-			return fmt.Errorf("failed to reload ollama service: %w", err)
+	if !engineConfig.LocalDev && engineConfig.Type != "vllm" {
+		if err := engine.ReloadService(ctx); err != nil {
+			return fmt.Errorf("failed to reload %s service: %w", engineConfig.SystemdServiceName, err)
 		}
 	}
 
 	// Prewarm models to load them into memory and warm any disk caches.
-	if err := ollama.Prewarm(ctx); err != nil {
-		return fmt.Errorf("failed to prewarm Ollama models: %w", err)
+	if err := engine.Prewarm(ctx); err != nil {
+		return fmt.Errorf("failed to prewarm models: %w", err)
 	}
 
-	slog.InfoContext(ctx, "Ollama initialized successfully")
+	slog.InfoContext(ctx, "inference engine initialized successfully")
 	return nil
 }
 

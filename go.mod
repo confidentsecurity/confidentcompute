@@ -2,6 +2,7 @@ module github.com/confidentsecurity/confidentcompute
 
 go 1.25.1
 
+
 require (
 	cloud.google.com/go/compute v1.49.1
 	cloud.google.com/go/storage v1.57.0
@@ -10,7 +11,7 @@ require (
 	github.com/cenkalti/backoff/v4 v4.3.0
 	github.com/cloudflare/circl v1.6.1
 	github.com/confidentsecurity/go-nvtrust v0.2.1
-	github.com/confidentsecurity/twoway v0.0.7
+	github.com/confidentsecurity/twoway v0.0.10
 	github.com/coreos/go-systemd/v22 v22.6.0
 	github.com/felixge/fgprof v0.9.5
 	github.com/golang-jwt/jwt/v5 v5.3.0
@@ -19,7 +20,7 @@ require (
 	github.com/lmittmann/tint v1.1.2
 	github.com/mattn/go-isatty v0.0.20
 	github.com/ollama/ollama v0.12.6
-	github.com/openpcc/openpcc v0.0.7
+	github.com/openpcc/openpcc v0.0.10
 	github.com/quic-go/quic-go v0.55.0
 	github.com/stretchr/testify v1.11.1
 	go.opentelemetry.io/otel v1.38.0
@@ -54,8 +55,8 @@ require (
 	github.com/cenkalti/backoff/v5 v5.0.3 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/cncf/xds/go v0.0.0-20250501225837-2ac532fd4443 // indirect
-	github.com/confidentsecurity/bhttp v0.0.7 // indirect
-	github.com/confidentsecurity/ohttp v0.0.7 // indirect
+	github.com/confidentsecurity/bhttp v0.0.10 // indirect
+	github.com/confidentsecurity/ohttp v0.0.10 // indirect
 	github.com/coreos/go-oidc/v3 v3.16.0 // indirect
 	github.com/cyberphone/json-canonicalization v0.0.0-20241213102144-19d51d7fe467 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
@@ -138,6 +139,7 @@ require (
 	github.com/pressly/goose/v3 v3.26.0 // indirect
 	github.com/remychantenay/slog-otel v1.3.4 // indirect
 	github.com/sagikazarmark/locafero v0.12.0 // indirect
+	github.com/sashabaranov/go-openai v1.41.2
 	github.com/sassoftware/relic v7.2.1+incompatible // indirect
 	github.com/secure-systems-lab/go-securesystemslib v0.9.1 // indirect
 	github.com/segmentio/ksuid v1.0.4 // indirect
