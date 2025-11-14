@@ -1,0 +1,14 @@
+response.json is the body of the following curl call:
+-- req.sh --
+curl -v -X POST http://localhost:8000/v1/chat/completions -H "Content-Type: application/json" -d '{
+"model": "llama3.2:1b",
+"messages": [
+    {
+        "role": "user",
+        "content": "tell me a joke"
+    }
+],
+"stream": false
+}'
+-- response.json --
+{"id":"chatcmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"chat.completion","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"message":{"role":"assistant","content":""},"finish_reason":"stop"}],"usage":{"prompt_tokens":29,"completion_tokens":0,"total_tokens":29}}

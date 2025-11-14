@@ -90,24 +90,24 @@ func TestServiceRun(t *testing.T) {
 		modConfig      func(t *testing.T, cfg *computeworker.Config)
 		verifyErr      func(t *testing.T, err error)
 	}{
-		"ok, /api/generate no streaming, valid empty response from llm, full refund": {
+		"ok, /v1/chat/completions no streaming, valid empty response from llm, full refund": {
 			creditAmount: 200,
 			reqFunc: func(t *testing.T) *http.Request {
-				bdy := strings.NewReader(`{"model":"llama3.2:1b","prompt":"Ping","stream":false}`)
-				return newJSONRequest(t, "https://confsec.invalid/api/generate", bdy)
+				bdy := strings.NewReader(`{"model":"llama3.2:1b","messages":[{"role":"user","content":"Ping"}],"stream":false}`)
+				return newJSONRequest(t, "https://confsec.invalid/v1/chat/completions", bdy)
 			},
 			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
-				data := readTestDataResponse(t, "generate-no-stream-empty.txt")
+				data := readTestDataResponse(t, "openai-chat-completion-no-stream-empty.txt")
 				w.Write(data)
 			},
 			verifyRespFunc: func(t *testing.T, resp *http.Response) {
 				require.Equal(t, http.StatusOK, resp.StatusCode)
 				require.Equal(t, http.Header{
-					"Content-Length": []string{"280"},
+					"Content-Length": []string{"271"},
 					"Content-Type":   []string{"text/plain; charset=utf-8"},
 					"Date":           []string{resp.Header.Get("Date")},
 				}, resp.Header)
-				data := readTestDataResponse(t, "generate-no-stream-empty.txt")
+				data := readTestDataResponse(t, "openai-chat-completion-no-stream-empty.txt")
 				test.RequireReadAll(t, data, resp.Body)
 				require.NoError(t, resp.Body.Close())
 			},
@@ -119,24 +119,24 @@ func TestServiceRun(t *testing.T) {
 				require.GreaterOrEqual(t, amount, int64(180))
 			},
 		},
-		"ok, /api/generate no streaming, valid response from llm, missing eval_count, no refund": {
+		"ok, /v1/chat/completions no streaming, valid response from llm, missing eval_count, no refund": {
 			creditAmount: 100,
 			reqFunc: func(t *testing.T) *http.Request {
-				bdy := strings.NewReader(`{"model":"llama3.2:1b","prompt":"Ping","stream":false}`)
-				return newJSONRequest(t, "https://confsec.invalid/api/generate", bdy)
+				bdy := strings.NewReader(`{"model":"llama3.2:1b","messages":[{"role":"user","content":"Ping"}],"stream":false}`)
+				return newJSONRequest(t, "https://confsec.invalid/v1/chat/completions", bdy)
 			},
 			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
-				data := readTestDataResponse(t, "generate-no-stream-missing-eval-count.txt")
+				data := readTestDataResponse(t, "openai-chat-completion-no-stream-missing-eval-count.txt")
 				w.Write(data)
 			},
 			verifyRespFunc: func(t *testing.T, resp *http.Response) {
 				require.Equal(t, http.StatusOK, resp.StatusCode)
 				require.Equal(t, http.Header{
-					"Content-Length": []string{"856"},
+					"Content-Length": []string{"436"},
 					"Content-Type":   []string{"text/plain; charset=utf-8"},
 					"Date":           []string{resp.Header.Get("Date")},
 				}, resp.Header)
-				data := readTestDataResponse(t, "generate-no-stream-missing-eval-count.txt")
+				data := readTestDataResponse(t, "openai-chat-completion-no-stream-missing-eval-count.txt")
 				test.RequireReadAll(t, data, resp.Body)
 				require.NoError(t, resp.Body.Close())
 			},
@@ -144,24 +144,24 @@ func TestServiceRun(t *testing.T) {
 				require.Nil(t, f.Refund)
 			},
 		},
-		"ok, /api/generate no streaming, valid response from llm, used some credits": {
+		"ok, /v1/completions no streaming, valid response from llm, used some credits": {
 			creditAmount: 200,
 			reqFunc: func(t *testing.T) *http.Request {
-				bdy := strings.NewReader(`{"model":"llama3.2:1b","prompt":"Ping","stream":false}`)
-				return newJSONRequest(t, "https://confsec.invalid/api/generate", bdy)
+				bdy := strings.NewReader(`{"model":"llama3.2:1b","prompt":"Hello","stream":false}`)
+				return newJSONRequest(t, "https://confsec.invalid/v1/completions", bdy)
 			},
 			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
-				data := readTestDataResponse(t, "generate-no-stream.txt")
+				data := readTestDataResponse(t, "openai-completion-no-stream.txt")
 				w.Write(data)
 			},
 			verifyRespFunc: func(t *testing.T, resp *http.Response) {
 				require.Equal(t, http.StatusOK, resp.StatusCode)
 				require.Equal(t, http.Header{
-					"Content-Length": []string{"872"},
+					"Content-Length": []string{"439"},
 					"Content-Type":   []string{"text/plain; charset=utf-8"},
 					"Date":           []string{resp.Header.Get("Date")},
 				}, resp.Header)
-				data := readTestDataResponse(t, "generate-no-stream.txt")
+				data := readTestDataResponse(t, "openai-completion-no-stream.txt")
 				test.RequireReadAll(t, data, resp.Body)
 				require.NoError(t, resp.Body.Close())
 			},
@@ -174,24 +174,24 @@ func TestServiceRun(t *testing.T) {
 				require.LessOrEqual(t, amount, int64(85))
 			},
 		},
-		"ok, /api/generate no streaming, valid response from llm, used all credits": {
+		"ok, /v1/chat/completions no streaming, valid response from llm, used all credits": {
 			creditAmount: 4,
 			reqFunc: func(t *testing.T) *http.Request {
-				bdy := strings.NewReader(`{"model":"llama3.2:1b","prompt":"Ping","stream":false}`)
-				return newJSONRequest(t, "https://confsec.invalid/api/generate", bdy)
+				bdy := strings.NewReader(`{"model":"llama3.2:1b","messages":[{"role":"user","content":"Ping"}],"stream":false}`)
+				return newJSONRequest(t, "https://confsec.invalid/v1/chat/completions", bdy)
 			},
 			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
-				data := readTestDataResponse(t, "generate-no-stream.txt")
+				data := readTestDataResponse(t, "openai-chat-completion-no-stream.txt")
 				w.Write(data)
 			},
 			verifyRespFunc: func(t *testing.T, resp *http.Response) {
 				require.Equal(t, http.StatusOK, resp.StatusCode)
 				require.Equal(t, http.Header{
-					"Content-Length": []string{"872"},
+					"Content-Length": []string{"477"},
 					"Content-Type":   []string{"text/plain; charset=utf-8"},
 					"Date":           []string{resp.Header.Get("Date")},
 				}, resp.Header)
-				data := readTestDataResponse(t, "generate-no-stream.txt")
+				data := readTestDataResponse(t, "openai-chat-completion-no-stream.txt")
 				test.RequireReadAll(t, data, resp.Body)
 				require.NoError(t, resp.Body.Close())
 			},
@@ -199,14 +199,14 @@ func TestServiceRun(t *testing.T) {
 				require.Nil(t, f.Refund)
 			},
 		},
-		"ok, /api/generate streaming, valid empty response from llm, full refund": {
+		"ok, /v1/completions streaming, valid empty response from llm, full refund": {
 			creditAmount: 200,
 			reqFunc: func(t *testing.T) *http.Request {
-				bdy := strings.NewReader(`{"model":"llama3.2:1b","prompt":"Ping","stream":true}`)
-				return newJSONRequest(t, "https://confsec.invalid/api/generate", bdy)
+				bdy := strings.NewReader(`{"model":"llama3.2:1b","prompt":"Hello","stream":true,"stream_options":{"include_usage":true}}`)
+				return newJSONRequest(t, "https://confsec.invalid/v1/completions", bdy)
 			},
 			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
-				data := readTestDataResponse(t, "generate-stream-empty.txt")
+				data := readTestDataResponse(t, "openai-completion-stream-empty.txt")
 				w.Header().Set("Transfer-Encoding", "chunked")
 				w.Write(data)
 			},
@@ -215,7 +215,7 @@ func TestServiceRun(t *testing.T) {
 				require.Equal(t, http.Header{
 					"Date": []string{resp.Header.Get("Date")},
 				}, resp.Header)
-				data := readTestDataResponse(t, "generate-stream-empty.txt")
+				data := readTestDataResponse(t, "openai-completion-stream-empty.txt")
 				test.RequireReadAll(t, data, resp.Body)
 				require.NoError(t, resp.Body.Close())
 			},
@@ -227,14 +227,14 @@ func TestServiceRun(t *testing.T) {
 				require.GreaterOrEqual(t, amount, int64(180))
 			},
 		},
-		"ok, /api/generate streaming, valid response from llm, missing eval_count, no refund": {
+		"ok, /v1/completions streaming, valid response from llm, missing eval_count, no refund": {
 			creditAmount: 100,
 			reqFunc: func(t *testing.T) *http.Request {
-				bdy := strings.NewReader(`{"model":"llama3.2:1b","prompt":"Ping","stream":true}`)
-				return newJSONRequest(t, "https://confsec.invalid/api/generate", bdy)
+				bdy := strings.NewReader(`{"model":"llama3.2:1b","prompt":"Hello","stream":true}`)
+				return newJSONRequest(t, "https://confsec.invalid/v1/completions", bdy)
 			},
 			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
-				data := readTestDataResponse(t, "generate-stream-missing-eval-count.txt")
+				data := readTestDataResponse(t, "openai-completion-stream-missing-eval-count.txt")
 				w.Header().Set("Transfer-Encoding", "chunked")
 				w.Write(data)
 			},
@@ -243,7 +243,7 @@ func TestServiceRun(t *testing.T) {
 				require.Equal(t, http.Header{
 					"Date": []string{resp.Header.Get("Date")},
 				}, resp.Header)
-				data := readTestDataResponse(t, "generate-stream-missing-eval-count.txt")
+				data := readTestDataResponse(t, "openai-completion-stream-missing-eval-count.txt")
 				test.RequireReadAll(t, data, resp.Body)
 				require.NoError(t, resp.Body.Close())
 			},
@@ -251,14 +251,14 @@ func TestServiceRun(t *testing.T) {
 				require.Nil(t, f.Refund)
 			},
 		},
-		"ok, /api/generate streaming, valid response from llm, used some credits": {
+		"ok, /v1/completions streaming, valid response from llm, used some credits": {
 			creditAmount: 200,
 			reqFunc: func(t *testing.T) *http.Request {
-				bdy := strings.NewReader(`{"model":"llama3.2:1b","prompt":"Ping","stream":true}`)
-				return newJSONRequest(t, "https://confsec.invalid/api/generate", bdy)
+				bdy := strings.NewReader(`{"model":"llama3.2:1b","prompt":"Hello","stream":true,"stream_options":{"include_usage":true}}`)
+				return newJSONRequest(t, "https://confsec.invalid/v1/completions", bdy)
 			},
 			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
-				data := readTestDataResponse(t, "generate-stream.txt")
+				data := readTestDataResponse(t, "openai-completion-stream.txt")
 				w.Header().Set("Transfer-Encoding", "chunked")
 				w.Write(data)
 			},
@@ -267,7 +267,7 @@ func TestServiceRun(t *testing.T) {
 				require.Equal(t, http.Header{
 					"Date": []string{resp.Header.Get("Date")},
 				}, resp.Header)
-				data := readTestDataResponse(t, "generate-stream.txt")
+				data := readTestDataResponse(t, "openai-completion-stream.txt")
 				test.RequireReadAll(t, data, resp.Body)
 				require.NoError(t, resp.Body.Close())
 			},
@@ -280,14 +280,14 @@ func TestServiceRun(t *testing.T) {
 				require.LessOrEqual(t, amount, int64(85))
 			},
 		},
-		"ok, /api/generate streaming, valid response from llm, used all credits": {
+		"ok, /v1/chat/completions streaming, valid response from llm, used all credits": {
 			creditAmount: 4,
 			reqFunc: func(t *testing.T) *http.Request {
-				bdy := strings.NewReader(`{"model":"llama3.2:1b","prompt":"Ping","stream":true}`)
-				return newJSONRequest(t, "https://confsec.invalid/api/generate", bdy)
+				bdy := strings.NewReader(`{"model":"llama3.2:1b","messages":[{"role":"user","content":"Hello"}],"stream":true,"stream_options":{"include_usage":true}}`)
+				return newJSONRequest(t, "https://confsec.invalid/v1/chat/completions", bdy)
 			},
 			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
-				data := readTestDataResponse(t, "generate-stream.txt")
+				data := readTestDataResponse(t, "openai-chat-completion-stream.txt")
 				w.Header().Set("Transfer-Encoding", "chunked")
 				w.Write(data)
 			},
@@ -296,7 +296,7 @@ func TestServiceRun(t *testing.T) {
 				require.Equal(t, http.Header{
 					"Date": []string{resp.Header.Get("Date")},
 				}, resp.Header)
-				data := readTestDataResponse(t, "generate-stream.txt")
+				data := readTestDataResponse(t, "openai-chat-completion-stream.txt")
 				test.RequireReadAll(t, data, resp.Body)
 				require.NoError(t, resp.Body.Close())
 			},
@@ -304,24 +304,24 @@ func TestServiceRun(t *testing.T) {
 				require.Nil(t, f.Refund)
 			},
 		},
-		"ok, /api/chat no streaming, valid response from llm, used some credits": {
+		"ok, /v1/chat/completions no streaming, valid response from llm, used some credits": {
 			creditAmount: 200,
 			reqFunc: func(t *testing.T) *http.Request {
-				bdy := strings.NewReader(`{"model":"llama3.2:1b","prompt":"Ping","stream":false}`)
-				return newJSONRequest(t, "https://confsec.invalid/api/generate", bdy)
+				bdy := strings.NewReader(`{"model":"llama3.2:1b","messages":[{"role":"user","content":"Ping"}],"stream":false}`)
+				return newJSONRequest(t, "https://confsec.invalid/v1/chat/completions", bdy)
 			},
 			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
-				data := readTestDataResponse(t, "chat-no-stream.txt")
+				data := readTestDataResponse(t, "openai-chat-completion-no-stream.txt")
 				w.Write(data)
 			},
 			verifyRespFunc: func(t *testing.T, resp *http.Response) {
 				require.Equal(t, http.StatusOK, resp.StatusCode)
 				require.Equal(t, http.Header{
-					"Content-Length": []string{"503"},
+					"Content-Length": []string{"477"},
 					"Content-Type":   []string{"text/plain; charset=utf-8"},
 					"Date":           []string{resp.Header.Get("Date")},
 				}, resp.Header)
-				data := readTestDataResponse(t, "chat-no-stream.txt")
+				data := readTestDataResponse(t, "openai-chat-completion-no-stream.txt")
 				test.RequireReadAll(t, data, resp.Body)
 				require.NoError(t, resp.Body.Close())
 			},
@@ -334,14 +334,14 @@ func TestServiceRun(t *testing.T) {
 				require.LessOrEqual(t, amount, int64(82))
 			},
 		},
-		"ok, /api/chat streaming, valid response from llm, used some credits": {
+		"ok, /v1/chat/completions streaming, valid response from llm, used some credits": {
 			creditAmount: 200,
 			reqFunc: func(t *testing.T) *http.Request {
 				bdy := strings.NewReader(`{"model":"llama3.2:1b","messages":[{"role":"user","content":"Ping"}],"stream":true}`)
-				return newJSONRequest(t, "https://confsec.invalid/api/chat", bdy)
+				return newJSONRequest(t, "https://confsec.invalid/v1/chat/completions", bdy)
 			},
 			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
-				data := readTestDataResponse(t, "chat-stream.txt")
+				data := readTestDataResponse(t, "openai-chat-completion-stream.txt")
 				w.Header().Set("Transfer-Encoding", "chunked")
 				w.Write(data)
 			},
@@ -350,7 +350,7 @@ func TestServiceRun(t *testing.T) {
 				require.Equal(t, http.Header{
 					"Date": []string{resp.Header.Get("Date")},
 				}, resp.Header)
-				data := readTestDataResponse(t, "chat-stream.txt")
+				data := readTestDataResponse(t, "openai-chat-completion-stream.txt")
 				test.RequireReadAll(t, data, resp.Body)
 				require.NoError(t, resp.Body.Close())
 			},
@@ -366,8 +366,8 @@ func TestServiceRun(t *testing.T) {
 		"ok, valid request, 5xx response from llm, full refund": {
 			creditAmount: 200,
 			reqFunc: func(t *testing.T) *http.Request {
-				bdy := strings.NewReader(`{"model":"llama3.2:1b","prompt":"Ping","stream":false}`)
-				return newJSONRequest(t, "https://confsec.invalid/api/generate", bdy)
+				bdy := strings.NewReader(`{"model":"llama3.2:1b","messages":[{"role":"user","content":"Ping"}],"stream":false}`)
+				return newJSONRequest(t, "https://confsec.invalid/v1/chat/completions", bdy)
 			},
 			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(http.StatusInternalServerError)
@@ -393,8 +393,8 @@ func TestServiceRun(t *testing.T) {
 		"ok, noop request does not call handler and looks okay": {
 			creditAmount: 200,
 			reqFunc: func(t *testing.T) *http.Request {
-				bdy := strings.NewReader(`{"model":"llama3.2:1b","prompt":"Ping","stream":true}`)
-				req := newJSONRequest(t, "https://confsec.invalid/api/generate", bdy)
+				bdy := strings.NewReader(`{"model":"llama3.2:1b","messages":[{"role":"user","content":"Ping"}],"stream":true}`)
+				req := newJSONRequest(t, "https://confsec.invalid/v1/chat/completions", bdy)
 				req.Header.Set("X-Confsec-Exec", "noop")
 				return req
 			},
@@ -421,8 +421,8 @@ func TestServiceRun(t *testing.T) {
 		"ok, simulated request does not call handler and looks okay": {
 			creditAmount: 200,
 			reqFunc: func(t *testing.T) *http.Request {
-				bdy := strings.NewReader(`{"model":"llama3.2:1b","prompt":"Ping","stream":true}`)
-				req := newJSONRequest(t, "https://confsec.invalid/api/generate", bdy)
+				bdy := strings.NewReader(`{"model":"llama3.2:1b","messages":[{"role":"user","content":"Ping"}],"stream":true}`)
+				req := newJSONRequest(t, "https://confsec.invalid/v1/chat/completions", bdy)
 				req.Header.Set("X-Confsec-Exec", "simulated")
 				return req
 			},
@@ -452,8 +452,8 @@ func TestServiceRun(t *testing.T) {
 		},
 		"ok, unknown headers are stripped": {
 			reqFunc: func(t *testing.T) *http.Request {
-				bdy := strings.NewReader(`{"model":"llama3.2:1b","prompt":"Ping","stream":true}`)
-				req := newJSONRequest(t, "https://confsec.invalid/api/generate", bdy)
+				bdy := strings.NewReader(`{"model":"llama3.2:1b","messages":[{"role":"user","content":"Ping"}],"stream":true}`)
+				req := newJSONRequest(t, "https://confsec.invalid/v1/chat/completions", bdy)
 				req.Header.Set("X-Unknown-Header", "test")
 				return req
 			},
@@ -465,7 +465,7 @@ func TestServiceRun(t *testing.T) {
 					"User-Agent":      []string{"Go-http-client/1.1"},
 					// Note: No X-Unknown-Header
 				}, r.Header)
-				data := readTestDataResponse(t, "generate-no-stream.txt")
+				data := readTestDataResponse(t, "openai-chat-completion-no-stream.txt")
 				w.Write(data)
 			},
 			verifyRespFunc: func(t *testing.T, resp *http.Response) {},
@@ -474,8 +474,8 @@ func TestServiceRun(t *testing.T) {
 		"ok, invalid request, blocked header": {
 			creditAmount: 200,
 			reqFunc: func(t *testing.T) *http.Request {
-				bdy := strings.NewReader(`{"model":"llama3.2:1b","prompt":"Ping","stream":true}`)
-				req := newJSONRequest(t, "https://confsec.invalid/api/generate", bdy)
+				bdy := strings.NewReader(`{"model":"llama3.2:1b","messages":[{"role":"user","content":"Ping"}],"stream":true}`)
+				req := newJSONRequest(t, "https://confsec.invalid/v1/chat/completions", bdy)
 				req.Header.Set("Content-Encoding", "gzip")
 				return req
 			},
@@ -527,11 +527,11 @@ func TestServiceRun(t *testing.T) {
 		"ok, invalid request, body too long": {
 			creditAmount: 200,
 			reqFunc: func(t *testing.T) *http.Request {
-				tmpl := `{"model":"llama:3.2:1b","prompt":"%s","stream":false}`
+				tmpl := `{"model":"llama3.2:1b","messages":[{"role":"user","content":"%s"}],"stream":false}`
 				// +2 to account for `%s` in template (it counts toward the `tmpl` length), +1 to exceed the max size (1 MB)
 				promptLen := 1*1024*1024 - len(tmpl) + 2 + 1
 				bdy := strings.NewReader(fmt.Sprintf(tmpl, strings.Repeat("a", promptLen)))
-				req := newJSONRequest(t, "https://confsec.invalid/api/generate", bdy)
+				req := newJSONRequest(t, "https://confsec.invalid/v1/chat/completions", bdy)
 				return req
 			},
 			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
@@ -556,8 +556,8 @@ func TestServiceRun(t *testing.T) {
 		"ok, invalid request, unknown hostname": {
 			creditAmount: 200,
 			reqFunc: func(t *testing.T) *http.Request {
-				bdy := strings.NewReader(`{"model":"llama3.2:1b","prompt":"Ping","stream":true}`)
-				req := newJSONRequest(t, "https://example.com/api/generate", bdy)
+				bdy := strings.NewReader(`{"model":"llama3.2:1b","messages":[{"role":"user","content":"Ping"}],"stream":true}`)
+				req := newJSONRequest(t, "https://example.com/v1/chat/completions", bdy)
 				return req
 			},
 			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
@@ -582,8 +582,8 @@ func TestServiceRun(t *testing.T) {
 		"fail, media-type mismatch": {
 			creditAmount: 200,
 			reqFunc: func(t *testing.T) *http.Request {
-				bdy := strings.NewReader(`{"model":"llama3.2:1b","prompt":"Ping","stream":false}`)
-				return newJSONRequest(t, "https://confsec.invalid/api/generate", bdy)
+				bdy := strings.NewReader(`{"model":"llama3.2:1b","messages":[{"role":"user","content":"Ping"}],"stream":false}`)
+				return newJSONRequest(t, "https://confsec.invalid/v1/chat/completions", bdy)
 			},
 			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
 				assert.Fail(t, "unexpected handler call")
@@ -600,8 +600,8 @@ func TestServiceRun(t *testing.T) {
 		"fail, encap key tampered with": {
 			creditAmount: 200,
 			reqFunc: func(t *testing.T) *http.Request {
-				bdy := strings.NewReader(`{"model":"llama3.2:1b","prompt":"Ping","stream":false}`)
-				return newJSONRequest(t, "https://confsec.invalid/api/generate", bdy)
+				bdy := strings.NewReader(`{"model":"llama3.2:1b","messages":[{"role":"user","content":"Ping"}],"stream":false}`)
+				return newJSONRequest(t, "https://confsec.invalid/v1/chat/completions", bdy)
 			},
 			handler: func(t *testing.T, w http.ResponseWriter, r *http.Request) {
 				assert.Fail(t, "unexpected handler call")

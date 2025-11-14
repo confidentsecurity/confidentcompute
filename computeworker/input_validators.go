@@ -557,7 +557,7 @@ func (v BodyValidator) ValidateWithBadge(r *http.Request, b *credentialing.Badge
 		return newValidationError(ErrBodyTooLarge, "content-length exceeds max size")
 	}
 
-	// TODO[Val]: Should be route-aware (e.g., this is not suitable for Ollama's `GET /api/tags`).
+	// TODO[Val]: Should be route-aware (e.g., this is not suitable for open AI's `GET /v1/models`).
 	if r.Body == nil {
 		return newValidationError(ErrEmptyBody, "empty body")
 	}

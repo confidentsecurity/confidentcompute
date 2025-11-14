@@ -1,0 +1,14 @@
+response.json is the body of the following curl call:
+-- req.sh --
+curl -v -X POST http://localhost:8000/v1/chat/completions -H "Content-Type: application/json" -d '{
+"model": "llama3.2:1b",
+"messages": [
+    {
+        "role": "user",
+        "content": "tell me a joke"
+    }
+],
+"stream": false
+}'
+-- response.json --
+{"id":"chatcmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"chat.completion","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"message":{"role":"assistant","content":"A man walked into a library and asked the librarian, \"Do you have any books on Pavlov's dogs and Schrödinger's cat?\" \n\nThe librarian replied, \"It rings a bell, but I'm not sure if it's here or not.\""},"finish_reason":"stop"}],"usage":{"prompt_tokens":29,"completion_tokens":55,"total_tokens":84}}

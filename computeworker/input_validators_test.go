@@ -84,8 +84,8 @@ func getTestBadgeInvalidSignature(t *testing.T, keyProvider credentialing.BadgeK
 func TestEndpointValidator(t *testing.T) {
 	t.Run("basic validations", func(t *testing.T) {
 		allowedEndpoints := map[string][]string{
-			"/api/generate": {"POST"},
-			"/api/embed":    {"POST"},
+			"/v1/chat/completions": {"POST"},
+			"/api/embed":           {"POST"},
 		}
 		testCases := []struct {
 			name       string
@@ -97,8 +97,8 @@ func TestEndpointValidator(t *testing.T) {
 		}{
 			{
 				name:       "allowed_route",
-				path:       "/api/generate",
-				requestURI: "/api/generate",
+				path:       "/v1/chat/completions",
+				requestURI: "/v1/chat/completions",
 				method:     "POST",
 				wantErr:    false,
 			},
@@ -112,24 +112,24 @@ func TestEndpointValidator(t *testing.T) {
 			},
 			{
 				name:       "allowed_path_disallowed_method",
-				path:       "/api/generate",
-				requestURI: "/api/generate",
+				path:       "/v1/chat/completions",
+				requestURI: "/v1/chat/completions",
 				method:     "PUT",
 				wantErr:    true,
 				wantCode:   ErrUnsupportedMethod,
 			},
 			{
 				name:       "allowed_path_with_query_params",
-				path:       "/api/generate?user=admin",
-				requestURI: "/api/generate?user=admin",
+				path:       "/v1/chat/completions?user=admin",
+				requestURI: "/v1/chat/completions?user=admin",
 				method:     "POST",
 				wantErr:    true,
 				wantCode:   ErrQueryParamsNotAllowed,
 			},
 			{
 				name:       "url_path_differs_from_request_uri",
-				path:       "/api/generate",
-				requestURI: "/api/generate/.../admin",
+				path:       "/v1/chat/completions",
+				requestURI: "/v1/chat/completions/.../admin",
 				method:     "POST",
 				wantErr:    true,
 				wantCode:   ErrInvalidRequestURI,
@@ -266,7 +266,7 @@ func TestHeaderValidator(t *testing.T) {
 				Blocked:       blockedHeaders,
 			}
 
-			req := httptest.NewRequest(http.MethodPost, "/api/generate", nil)
+			req := httptest.NewRequest(http.MethodPost, "/v1/chat/completions", nil)
 
 			for key, value := range tc.headers {
 				req.Header.Set(key, value)
@@ -282,7 +282,7 @@ func TestHeaderValidator(t *testing.T) {
 			Blocked:       blockedHeaders,
 		}
 
-		req := httptest.NewRequest(http.MethodPost, "/api/generate", nil)
+		req := httptest.NewRequest(http.MethodPost, "/v1/chat/completions", nil)
 		req.Header.Add("Content-Type", "application/json")
 
 		v := "application/json"
@@ -343,7 +343,7 @@ func TestRequestAuthorizer(t *testing.T) {
 				BadgePublicKey: badgePK,
 			}
 
-			req := httptest.NewRequest(http.MethodPost, "/api/generate", nil)
+			req := httptest.NewRequest(http.MethodPost, "/v1/chat/completions", nil)
 
 			for key, value := range tc.headers {
 				req.Header.Set(key, value)
@@ -382,7 +382,14 @@ func TestBodyValidator(t *testing.T) {
 				return ""
 			}
 
-			basePayload := `{"model":"llama3.2:1b","prompt":"%s","stream":false}`
+			basePayload := `{
+				"model":"llama3.2:1b",
+				"messages": [
+					{"role":"system","content":"you are a helpful assistant"},
+					{"role":"user","content":"%s"}
+				],
+				"stream":false
+			}`
 
 			baseSize := len(fmt.Sprintf(basePayload, ""))
 			fillerSize := targetSize - baseSize
@@ -455,7 +462,7 @@ func TestBodyValidator(t *testing.T) {
 		for _, tc := range testCases {
 			t.Run(tc.name, func(t *testing.T) {
 				body := createValidPayload(tc.bodySize)
-				req := httptest.NewRequest(http.MethodPost, "/api/generate", bytes.NewBufferString(body))
+				req := httptest.NewRequest(http.MethodPost, "/v1/chat/completions", bytes.NewBufferString(body))
 				if tc.setContentSize && tc.contentSize > 0 {
 					req.ContentLength = int64(tc.contentSize)
 				}
@@ -1048,18 +1055,18 @@ func TestHostnameValidator(t *testing.T) {
 	}{
 		{
 			name:    "allowed_hostname",
-			url:     "http://confsec.invalid/api/generate",
+			url:     "http://confsec.invalid/v1/chat/completions",
 			wantErr: false,
 		},
 		{
 			name:     "empty_hostname",
-			url:      "http:///api/generate",
+			url:      "http:///v1/chat/completions",
 			wantErr:  true,
 			wantCode: ErrUnknownHostname,
 		},
 		{
 			name:     "disallowed_hostname",
-			url:      "http://example.com/api/generate",
+			url:      "http://example.com/v1/chat/completions",
 			wantErr:  true,
 			wantCode: ErrUnknownHostname,
 		},
@@ -1108,7 +1115,7 @@ func TestRequestValidator(t *testing.T) {
 				"Content-Type": "application/json",
 				badgeHeader:    serializedBadge,
 			},
-			payload:  `{"model":"privatemodel1.0","prompt":"Hello"}`,
+			payload:  `{"model":"privatemodel1.0","messages":[{"role":"user","content":"Hello"}],"stream":true,"stream_options":{"include_usage":true}}`,
 			wantErr:  true,
 			wantCode: ErrUnsupportedModel,
 		},
@@ -1122,8 +1129,9 @@ func TestRequestValidator(t *testing.T) {
 			},
 			EndpointValidator{
 				Allowed: map[string][]string{
-					"/api/generate": {"POST"},
-					"/api/embed":    {"POST"},
+					"/v1/chat/completions": {"POST"},
+					"/api/embed":           {"POST"},
+					"/v1/completions":      {"POST"},
 				},
 			},
 		},
@@ -1134,8 +1142,8 @@ func TestRequestValidator(t *testing.T) {
 			BodyValidator{
 				MaxSize: maxBodySize,
 				RouteBodyTypes: map[string]func() RequestBody{
-					"/api/generate": func() RequestBody { return &OllamaRequestBodyGenerate{} },
-					"/api/chat":     func() RequestBody { return &OllamaRequestBodyChat{} },
+					"/v1/chat/completions": func() RequestBody { return &OpenAIRequestBodyChat{} },
+					"/v1/completions":      func() RequestBody { return &OpenAIRequestBodyCompletions{} },
 				},
 				SupportedModels: []string{"llama3.2:1b", "privatemodel1.0", "qwen2:1.5b-instruct", "gemma3:1b"},
 			},
@@ -1144,7 +1152,7 @@ func TestRequestValidator(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			req := httptest.NewRequest(http.MethodPost, "/api/generate", strings.NewReader(tc.payload))
+			req := httptest.NewRequest(http.MethodPost, "/v1/chat/completions", strings.NewReader(tc.payload))
 			for key, value := range tc.headers {
 				req.Header.Set(key, value)
 			}

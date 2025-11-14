@@ -41,6 +41,7 @@ import (
 	"github.com/openpcc/openpcc/messages"
 	"github.com/openpcc/openpcc/models"
 	"github.com/openpcc/openpcc/otel/otelutil"
+	"github.com/sashabaranov/go-openai"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
 	"go.opentelemetry.io/otel/trace"
@@ -339,7 +340,7 @@ func (s *Worker) handle(req *http.Request) (*http.Response, error) {
 	switch {
 	case exec == "noop":
 		recordConfsecExecHeaderInTrace(ctx, exec)
-		return s.recordNoopResponse()
+		return s.recordNoopResponse(req.URL.Path)
 	case exec == "simulated":
 		recordConfsecExecHeaderInTrace(ctx, exec)
 		return s.recordSimulatedResponse()
@@ -363,45 +364,91 @@ func recordConfsecExecHeaderInTrace(ctx context.Context, exec string) {
 	span.SetAttributes(attribute.String("confsec.exec", exec))
 }
 
-// recordNoopResponse returns a minimal Ollama response without performing any inference.
-// The response consists of 2 lines that are technically streamed back to the client.
+// recordNoopResponse returns a minimal response without performing any inference.
+// The response format depends on the path parameter:
+// - If path = "/api/generate", returns an Ollama GenerateResponse
+// - If path = "/v1/chat/completions", returns an OpenAI ChatCompletionResponse
 // Intended for load and e2e testing. Note that this response will include necessary fields for refunds to work.
-func (*Worker) recordNoopResponse() (*http.Response, error) {
+func (*Worker) recordNoopResponse(path string) (*http.Response, error) {
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
-	if err := enc.Encode(ollama.GenerateResponse{
-		Model:     "none",
-		CreatedAt: time.Now(),
-		Response:  "noop",
-	}); err != nil {
-		return nil, fmt.Errorf("failed to encode response: %w", err)
-	}
-	if err := enc.Encode(ollama.GenerateResponse{
-		Model:      "none",
-		CreatedAt:  time.Now(),
-		Done:       true,
-		DoneReason: "stop",
-		Metrics: ollama.Metrics{
-			PromptEvalCount: 1, // Struct field has `omitempty` tag, so we need to set it to a non-zero value.
-			EvalCount:       4, // "noop" has 4 characters.
-		},
-	}); err != nil {
-		return nil, fmt.Errorf("failed to encode done response: %w", err)
-	}
 
-	return &http.Response{
-		Status:     http.StatusText(http.StatusOK),
-		StatusCode: http.StatusOK,
-		Proto:      "HTTP/1.1",
-		ProtoMajor: 1,
-		ProtoMinor: 1,
-		Header: http.Header{
-			"Content-Type": []string{"application/x-ndjson"},
-			"Date":         []string{time.Now().Format(http.TimeFormat)},
-		},
-		TransferEncoding: []string{"chunked"},
-		Body:             io.NopCloser(&buf),
-	}, nil
+	switch path {
+	case "/v1/chat/completions":
+		// Return OpenAI chat completion response
+		if err := enc.Encode(openai.ChatCompletionResponse{
+			ID:      "chatcmpl-noop",
+			Object:  "chat.completion",
+			Created: int64(time.Now().Unix()),
+			Model:   "none",
+			Choices: []openai.ChatCompletionChoice{
+				{
+					Index: 0,
+					Message: openai.ChatCompletionMessage{
+						Role:    openai.ChatMessageRoleAssistant,
+						Content: "noop",
+					},
+					FinishReason: openai.FinishReasonStop,
+				},
+			},
+			Usage: openai.Usage{
+				PromptTokens:     1,
+				CompletionTokens: 4,
+				TotalTokens:      5,
+			},
+		}); err != nil {
+			return nil, fmt.Errorf("failed to encode response: %w", err)
+		}
+
+		return &http.Response{
+			Status:     http.StatusText(http.StatusOK),
+			StatusCode: http.StatusOK,
+			Proto:      "HTTP/1.1",
+			ProtoMajor: 1,
+			ProtoMinor: 1,
+			Header: http.Header{
+				"Content-Type": []string{"application/x-ndjson"},
+				"Date":         []string{time.Now().Format(http.TimeFormat)},
+			},
+			Body: io.NopCloser(&buf),
+		}, nil
+
+	default:
+		// Default to Ollama /api/generate response
+		if err := enc.Encode(ollama.GenerateResponse{
+			Model:     "none",
+			CreatedAt: time.Now(),
+			Response:  "noop",
+		}); err != nil {
+			return nil, fmt.Errorf("failed to encode response: %w", err)
+		}
+		if err := enc.Encode(ollama.GenerateResponse{
+			Model:      "none",
+			CreatedAt:  time.Now(),
+			Done:       true,
+			DoneReason: "stop",
+			Metrics: ollama.Metrics{
+				PromptEvalCount: 1, // Struct field has `omitempty` tag, so we need to set it to a non-zero value.
+				EvalCount:       4, // "noop" has 4 characters.
+			},
+		}); err != nil {
+			return nil, fmt.Errorf("failed to encode done response: %w", err)
+		}
+
+		return &http.Response{
+			Status:     http.StatusText(http.StatusOK),
+			StatusCode: http.StatusOK,
+			Proto:      "HTTP/1.1",
+			ProtoMajor: 1,
+			ProtoMinor: 1,
+			Header: http.Header{
+				"Content-Type": []string{"application/x-ndjson"},
+				"Date":         []string{time.Now().Format(http.TimeFormat)},
+			},
+			TransferEncoding: []string{"chunked"},
+			Body:             io.NopCloser(&buf),
+		}, nil
+	}
 }
 
 // recordSimulatedResponse returns a representative Ollama-like streaming response without performing inference.

@@ -1,0 +1,11 @@
+response.json is the body of the following curl call:
+-- req.sh --
+curl -v -X POST http://localhost:8000/v1/completions -H "Content-Type: application/json" -d '{
+"model": "llama3.2:1b",
+"prompt": "tell me a joke",
+"stream": true,
+"stream_options": {"include_usage":true}
+}'
+-- response.json --
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":"","finish_reason":"stop"}],"usage":{"prompt_tokens":29,"completion_tokens":0,"total_tokens":29}}
+data: [DONE]

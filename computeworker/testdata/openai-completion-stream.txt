@@ -1,0 +1,64 @@
+response.json is the body of the following curl call:
+-- req.sh --
+curl -v -X POST http://localhost:8000/v1/completions -H "Content-Type: application/json" -d '{
+"model": "llama3.2:1b",
+"prompt": "tell me a joke",
+"stream": true,
+"stream_options": {"include_usage":true}
+}'
+-- response.json --
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":"A","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" man","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" walked","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" into","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" a","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" library","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" and","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" asked","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" the","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" librarian","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":",","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" \"","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":"Do","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" you","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" have","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" any","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" books","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" on","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" Pav","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":"lov","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":"'s","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" dogs","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" and","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" Sch","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":"r","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":"ö","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":"d","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":"inger","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":"'s","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" cat","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":"?\"","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" The","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" librarian","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" replied","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":",","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" \"","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":"It","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" rings","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" a","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" bell","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":",","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" but","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" I","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":"'m","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" not","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" sure","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" if","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" it","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":"'s","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" here","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" or","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":" not","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":".\"","finish_reason":null}]}
+data: {"id":"cmpl-8p5o2kKQvHx0KxVJXfzDKS","object":"text_completion.chunk","created":1716194078,"model":"llama3.2:1b","choices":[{"index":0,"text":"","finish_reason":"stop"}],"usage":{"prompt_tokens":29,"completion_tokens":55,"total_tokens":84}}
+data: [DONE]
