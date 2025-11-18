@@ -279,7 +279,10 @@ func TestReceive(t *testing.T) {
 }
 
 func newSocketPath(t *testing.T) string {
-	tmpDir := t.TempDir()
+	// Use /tmp directly to avoid macOS socket path length limits (104 chars)
+	// t.TempDir() creates paths like /var/folders/.../T/TestName.../... which are too long
+	tmpDir, err := os.MkdirTemp("/tmp", "test-sock-*")
+	require.NoError(t, err)
 	t.Cleanup(func() {
 		err := os.RemoveAll(tmpDir)
 		require.NoError(t, err)
