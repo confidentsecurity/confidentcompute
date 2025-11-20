@@ -1,6 +1,6 @@
 # Contributing
 
-We welcome contributions to this codebase. Please file issues or PRs in this github repo if there are changes you would like to see. We have no Contributors License Agreement and all accepted code will be released under the Apache 2.0 License.
+We welcome contributions to this codebase. Please file issues or PRs in this github repo if there are changes you would like to see. We have no Contributors License Agreement and all accepted code will be released under the Functional Source License, Version 1.1.
 
 Sensitive security-related issues should be reported to security@confident.security.
 

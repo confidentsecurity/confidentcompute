@@ -12,7 +12,7 @@ require (
 	github.com/cenkalti/backoff/v4 v4.3.0
 	github.com/cloudflare/circl v1.6.1
 	github.com/confidentsecurity/go-nvtrust v0.2.1
-	github.com/confidentsecurity/twoway v0.0.13
+	github.com/confidentsecurity/twoway v0.0.14
 	github.com/coreos/go-systemd/v22 v22.6.0
 	github.com/felixge/fgprof v0.9.5
 	github.com/golang-jwt/jwt/v5 v5.3.0
@@ -21,7 +21,7 @@ require (
 	github.com/lmittmann/tint v1.1.2
 	github.com/mattn/go-isatty v0.0.20
 	github.com/ollama/ollama v0.12.11
-	github.com/openpcc/openpcc v0.0.13
+	github.com/openpcc/openpcc v0.0.14
 	github.com/quic-go/quic-go v0.56.0
 	github.com/stretchr/testify v1.11.1
 	go.opentelemetry.io/otel v1.38.0
@@ -33,8 +33,8 @@ require (
 )
 
 require (
-	github.com/confidentsecurity/bhttp v0.0.13 // indirect
-	github.com/confidentsecurity/ohttp v0.0.13 // indirect
+	github.com/confidentsecurity/bhttp v0.0.14 // indirect
+	github.com/confidentsecurity/ohttp v0.0.14 // indirect
 )
 
 require (
