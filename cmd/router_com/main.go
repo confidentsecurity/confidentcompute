@@ -112,6 +112,16 @@ func run() int {
 		return 1
 	}
 
+	// Wait for compute_boot service to fully exit (including ExecStartPost cleanup).
+	// This ensures the temporary firewall rules have been removed before we start serving.
+	// Note that this may be optionally skipped for local dev environments without systemd.
+	if cfg.RouterCom.CheckComputeBootExit {
+		if err := routercom.WaitForComputeBootExit(context.Background()); err != nil {
+			slog.Error("compute_boot service did not exit cleanly", "error", err)
+			return 1
+		}
+	}
+
 	// setup routercom as an http app
 	rtrcom, err := routercom.New(cfg.RouterCom, evidenceList)
 	if err != nil {

@@ -30,6 +30,9 @@ type Config struct {
 	TPM *TPM `yaml:"tpm"`
 	// Worker is compute_worker related config
 	Worker *WorkerConfig `yaml:"worker"`
+	// CheckComputeBootExit controls whether to verify compute_boot service has exited before serving requests.
+	// Set to false for local dev environments without systemd.
+	CheckComputeBootExit bool `yaml:"check_compute_boot_exit"`
 }
 
 type TPM struct {
@@ -76,5 +79,6 @@ func DefaultConfig() *Config {
 			BadgePublicKey: "",
 			Models:         []string{},
 		},
+		CheckComputeBootExit: true,
 	}
 }
