@@ -125,6 +125,7 @@ func run(ctx context.Context) int {
 	}
 
 	// initialize inference engine after GPU is ready
+	slog.InfoContext(ctx, "Initializing inference engine", "engine", cfg.InferenceEngine.Type)
 	if err := initializeInferenceEngine(ctx, cfg.InferenceEngine); err != nil {
 		slog.Error("inference engine initialization failed", "error", err)
 		return 1
@@ -170,9 +171,15 @@ func initializeInferenceEngine(ctx context.Context, engineConfig *computeboot.In
 	engine := computeboot.NewInferenceEngineInitializerWithConfig(engineConfig)
 
 	// the reload uses a linux command
-	if !engineConfig.LocalDev && engineConfig.Type != "vllm" {
-		if err := engine.ReloadService(ctx); err != nil {
-			return fmt.Errorf("failed to reload %s service: %w", engineConfig.SystemdServiceName, err)
+	if !engineConfig.LocalDev {
+		if engineConfig.Type == "vllm" {
+			if err := engine.WaitUntilReady(ctx); err != nil {
+				return fmt.Errorf("inference engine %s did not become ready: %w", engineConfig.Type, err)
+			}
+		} else {
+			if err := engine.ReloadService(ctx); err != nil {
+				return fmt.Errorf("failed to reload %s service: %w", engineConfig.SystemdServiceName, err)
+			}
 		}
 	}
 

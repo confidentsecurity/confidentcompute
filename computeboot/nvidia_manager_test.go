@@ -25,6 +25,7 @@ import (
 	"errors"
 	"fmt"
 	"testing"
+	"time"
 
 	"github.com/NVIDIA/go-nvml/pkg/nvml"
 	"github.com/confidentsecurity/go-nvtrust/pkg/gonscq"
@@ -186,27 +187,27 @@ func TestVerifyGPUState(t *testing.T) {
 			persistenceMode:  false,
 			readyState:       false,
 			expectedError:    true,
-			expectedErrorMsg: "GPU is not in a valid state for confidential computing",
+			expectedErrorMsg: "timed out waiting for GPU to be in a valid state for confidential computing",
 		},
 		{
 			name:             "Invalid state - ready state on",
 			persistenceMode:  true,
 			readyState:       true,
 			expectedError:    true,
-			expectedErrorMsg: "GPU is not in a valid state for confidential computing",
+			expectedErrorMsg: "timed out waiting for GPU to be in a valid state for confidential computing",
 		},
 		{
 			name:             "Error checking persistence mode",
 			persistenceErr:   errors.New("persistence mode error"),
 			expectedError:    true,
-			expectedErrorMsg: "failed to get confidential compute state: failed to check if GPU is in persistence mode: persistence mode error",
+			expectedErrorMsg: "timed out waiting for GPU to be ready: failed to check if GPU is in persistence mode: persistence mode error",
 		},
 		{
 			name:             "Error checking ready state",
 			persistenceMode:  true,
 			readyStateErr:    errors.New("ready state error"),
 			expectedError:    true,
-			expectedErrorMsg: "failed to get confidential compute state: failed to check if confidential compute is ready: ready state error",
+			expectedErrorMsg: "timed out waiting for GPU to be ready: failed to check if confidential compute is ready: ready state error",
 		},
 	}
 
@@ -222,7 +223,8 @@ func TestVerifyGPUState(t *testing.T) {
 			}
 
 			manager := &NvidiaManager{
-				GPUAdmin: mockGPUAdmin,
+				GPUAdmin:            mockGPUAdmin,
+				VerificationTimeout: 100 * time.Millisecond,
 			}
 
 			err := manager.VerifyGPUState(t.Context())

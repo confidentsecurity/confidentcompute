@@ -88,10 +88,22 @@ func (eng *InferenceEngineInitializer) ReloadService(ctx context.Context) error 
 		return fmt.Errorf("failed to restart inference engine service: %s", job)
 	}
 
-	// Wait for inference engine to actually respond to HTTP requests,
-	// since blocking on its systemd service status is not enough to guarantee it's ready.
+	return eng.WaitUntilReady(ctx)
+}
+
+// WaitUntilReady waits for the inference engine to respond to HTTP requests.
+// This is useful after starting or restarting the service, since blocking on
+// systemd service status is not enough to guarantee the engine is ready.
+func (eng *InferenceEngineInitializer) WaitUntilReady(ctx context.Context) error {
+	// The health check endpoint for vllm is /health, but for ollama it's just /
+	var url string
+	if eng.engineType == "vllm" {
+		url = eng.engineURL + "/health"
+	} else {
+		url = eng.engineURL
+	}
 	for {
-		req, err := http.NewRequestWithContext(ctx, http.MethodGet, eng.engineURL, nil)
+		req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 		if err != nil {
 			return err
 		}
@@ -116,25 +128,23 @@ func (eng *InferenceEngineInitializer) ReloadService(ctx context.Context) error 
 
 func (eng *InferenceEngineInitializer) PrewarmModel(ctx context.Context, model string) error {
 	// Generate a dummy request to load the model into memory
-	stream := false
-
-	rawBody, err := json.Marshal(openai.ChatCompletionRequest{
-		Model: model,
-		Messages: []openai.ChatCompletionMessage{
-			{Role: openai.ChatMessageRoleUser, Content: "Hello"},
-		},
-		Stream:              stream,
-		MaxCompletionTokens: 10,
+	rawBody, err := json.Marshal(openai.CompletionRequest{
+		Model:     model,
+		Prompt:    "Ping",
+		Stream:    false,
+		MaxTokens: 10,
 	})
 	if err != nil {
 		return err
 	}
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, eng.engineURL+"/v1/chat/completions", bytes.NewBuffer(rawBody))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, eng.engineURL+"/v1/completions", bytes.NewBuffer(rawBody))
 	if err != nil {
 		return err
 	}
+	req.Header.Set("Content-Type", "application/json")
 
+	slog.InfoContext(ctx, "Prewarming model", "request", string(rawBody))
 	resp, err := eng.httpClient.Do(req)
 	if err != nil {
 		return err

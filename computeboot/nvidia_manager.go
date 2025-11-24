@@ -24,6 +24,7 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
+	"time"
 
 	"github.com/confidentsecurity/go-nvtrust/pkg/gonscq"
 	"github.com/confidentsecurity/go-nvtrust/pkg/gonvtrust"
@@ -56,6 +57,9 @@ type NvidiaManager struct {
 	NVSwitchAdminProvider           SwitchAdminProvider
 	NonceGenerator                  func() []byte
 	IntermediateCertificateProvider attest.CertificateProvider
+	// VerificationTimeout is the maximum time to wait for GPU to be ready.
+	// If zero, defaults to 5 minutes.
+	VerificationTimeout time.Duration
 }
 
 type ConfidentialComputeState struct {
@@ -117,16 +121,36 @@ func NewNvidiaManager() (*NvidiaManager, error) {
 func (n *NvidiaManager) VerifyGPUState(ctx context.Context) error {
 	slog.InfoContext(ctx, "Verifying GPU for confidential computing")
 
-	state, err := n.getConfidentialComputeState()
-	if err != nil {
-		return fmt.Errorf("failed to get confidential compute state: %w", err)
+	verificationTimeout := n.VerificationTimeout
+	if verificationTimeout == 0 {
+		verificationTimeout = 5 * time.Minute
 	}
 
-	if !state.preparedForAttestation() {
-		return errors.New("GPU is not in a valid state for confidential computing")
-	}
+	timeout := time.After(verificationTimeout)
 
-	return nil
+	for {
+		state, err := n.getConfidentialComputeState()
+		if err == nil && state.preparedForAttestation() {
+			slog.InfoContext(ctx, "GPU is ready for confidential computing")
+			return nil
+		}
+
+		if err != nil {
+			slog.WarnContext(ctx, "Failed to get confidential compute state, retrying", "error", err)
+		}
+
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		case <-timeout:
+			if err != nil {
+				return fmt.Errorf("timed out waiting for GPU to be ready: %w", err)
+			}
+			return errors.New("timed out waiting for GPU to be in a valid state for confidential computing")
+		case <-time.After(time.Second):
+			// retry
+		}
+	}
 }
 
 func (n *NvidiaManager) getConfidentialComputeState() (ConfidentialComputeState, error) {

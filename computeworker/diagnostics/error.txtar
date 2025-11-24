@@ -1,8 +1,8 @@
 -- req.sh --
-curl -v -X POST http://localhost:11434/api/generate -d '{
+curl -v -X POST http://localhost:11434/v1/completions -d '{
   "model": "NON_EXISTING",
   "prompt": "tell me a joke",
   "stream": false
 }'
 -- response.json --
-{"error":"model 'NON_EXISTING' not found"}
+{"error": "model 'NON_EXISTING' not found", "usage":{"prompt_tokens":14,"completion_tokens":0,"total_tokens":14}}
