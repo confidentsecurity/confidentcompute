@@ -27,7 +27,6 @@ import (
 
 	"github.com/cloudflare/circl/hpke"
 	"github.com/cloudflare/circl/kem"
-	"github.com/confidentsecurity/twoway"
 	"github.com/google/go-tpm/tpm2"
 	"github.com/google/go-tpm/tpm2/transport"
 	"github.com/google/go-tpm/tpmutil"
@@ -36,6 +35,7 @@ import (
 	"github.com/openpcc/openpcc/otel/otelutil"
 	cstpm "github.com/openpcc/openpcc/tpm"
 	tpmhpke "github.com/openpcc/openpcc/tpm/hpke"
+	"github.com/openpcc/twoway"
 	"go.opentelemetry.io/otel/codes"
 )
 
