@@ -64,6 +64,9 @@ func run(ctx context.Context) int {
 	}
 	defer shutdown(context.Background())
 
+	ctx, span := otelutil.Tracer.Start(ctx, "compute_boot")
+	defer span.End()
+
 	configFile, err := config.FilenameFromArgs(os.Args[1:])
 	if err != nil {
 		slog.Error("failed to determine config file", "error", err)
@@ -90,10 +93,13 @@ func run(ctx context.Context) int {
 		return 1
 	}
 
+	ctx, verifyGPUStateSpan := otelutil.Tracer.Start(ctx, "compute_boot.verifyGPUState")
 	if err := gpuManager.VerifyGPUState(ctx); err != nil {
 		slog.Error("GPU configuration failed", "error", err)
+		verifyGPUStateSpan.RecordError(err)
 		return 1
 	}
+	verifyGPUStateSpan.End()
 
 	tpmOperator, err := computeboot.NewTPMOperatorWithConfig(cfg.TPM)
 	if err != nil {
@@ -163,6 +169,9 @@ func setupTPM(ctx context.Context, tpmOperator *computeboot.TPMOperator) error {
 }
 
 func initializeInferenceEngine(ctx context.Context, engineConfig *computeboot.InferenceEngineConfig) error {
+	ctx, span := otelutil.Tracer.Start(ctx, "compute_boot.initializeInferenceEngine")
+	defer span.End()
+
 	if engineConfig.Skip {
 		slog.WarnContext(ctx, "skipping inference engine initialization")
 		return nil
