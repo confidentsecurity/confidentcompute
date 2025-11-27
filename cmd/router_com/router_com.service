@@ -1,0 +1,35 @@
+[Unit]
+Description=Confident Security Router Communications
+RequiresMountsFor=/opt
+After=network.target
+After=alloy.service
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=/opt/confidentsec
+Environment="GO_LOG=info"
+EnvironmentFile=/run/environment.d/system.conf
+ExecStartPre=/opt/confidentsec/bin/make-compute-config
+ExecStart=/opt/confidentsec/bin/router-com-secret-wrapper
+# Important that we only restart on abort,
+# since we will be triggering "failures" via timeouts.
+# https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#Restart=
+Restart=on-abort
+RestartSec=5
+SyslogIdentifier=router_com
+# Force router_com to stop after ~24 hours.
+# This is how we enforce a maximum lifetime for compute nodes.
+# On GCP and Azure, health checks will repair (replace)
+# the instance once it registers as unhealthy.
+# In the interim, the router will detect the node is unhealthy
+# and stop routing requests to it.
+RuntimeMaxSec=24h
+# Set some jitter for the above maxmimum runtime to avoid
+# having the whole fleet expire at the same time.
+# Since reboots take <5 minutes, we set the jitter to 20 minutes
+# to give a reasonable window of potential expirations.
+RuntimeRandomizedExtraSec=1200
+
+[Install]
+WantedBy=multi-user.target

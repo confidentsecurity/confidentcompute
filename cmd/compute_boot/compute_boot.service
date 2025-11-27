@@ -1,0 +1,32 @@
+[Unit]
+Description=Confident Security Compute Boot
+RequiresMountsFor=/opt
+After=network.target
+After=router_com.service
+After=alloy.service
+Requires=router_com.service
+Requires=alloy.service
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+WorkingDirectory=/opt/confidentsec
+Environment="GO_LOG=info"
+ExecStartPre=/opt/confidentsec/bin/make-compute-boot
+# Open up all outbound traffic to port 443 for the duration of the compute boot process.
+# This enables compute boot to complete attestation / PKI flows across the public internet via HTTPS.
+# TODO (CS-1246): Remove this workaround in place of having compute_boot dynamically open ports as needed.
+ExecStartPre=/usr/sbin/iptables -I ufw-user-output 1 -p tcp --dport 443 -j ACCEPT -m comment --comment "compute_boot temp allow PKI"
+ExecStart=/opt/confidentsec/bin/compute-boot-secret-wrapper
+# Delete all temporary rules to allow outbound traffic to 443 after compute boot has completed.
+# This "resets" the machine to the pre-defined ufw rules.
+# The loop handles cases where compute_boot was restarted and multiple rules were inserted.
+ExecStartPost=/bin/sh -c 'while /usr/sbin/iptables -D ufw-user-output -p tcp --dport 443 -m comment --comment "compute_boot temp allow PKI" -j ACCEPT 2>/dev/null; do :; done'
+RemainAfterExit=true
+Restart=on-failure
+RestartSec=5
+SyslogIdentifier=compute_boot
+
+[Install]
+WantedBy=multi-user.target

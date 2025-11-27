@@ -1,0 +1,29 @@
+#! /bin/sh
+
+set -eux
+
+basedir=/opt/confidentsec
+targetdir=/var/confidentsec/etc
+mkdir -p "$targetdir"
+# shellcheck source=/dev/null
+. ${basedir}/etc/system.conf
+mkdir -p /run/environment.d
+touch /run/environment.d/system.conf
+# shellcheck source=/dev/null
+. /run/environment.d/system.conf
+
+rek_handle="0x81000002" # Using a two step here for debugging
+
+COMPUTE_SELF_URL="http://${INSTANCE_IP}:8081"
+export COMPUTE_SELF_URL
+
+sed -e "s,{{\.COMPUTE_SELF_URL}},${COMPUTE_SELF_URL}," \
+    -e "s,{{\.REK_HANDLE}},${rek_handle}," \
+    -e "s,{{\.ROUTER_URL}},${ROUTER_URL}," \
+    -e "s,{{\.MODEL_NAME}},${MODEL_NAME}," \
+    -e "s,{{\.CLOUD}},${CLOUD}," \
+    -e "s,{{\.BADGE_PUBLIC_KEY}},${BADGE_PUBLIC_KEY}," \
+    -e "s,{{\.INFERENCE_ENGINE}},${INFERENCE_ENGINE}," \
+    -e "s,{{\.INFERENCE_ENGINE_PORT}},${INFERENCE_ENGINE_PORT}," \
+    -e "s,{{\.INFERENCE_ENGINE_SERVICE_NAME}},${INFERENCE_ENGINE_SERVICE_NAME}," \
+    "${basedir}/etc/router_com.yaml.template" > "${targetdir}/router_com.yaml"

@@ -1,0 +1,24 @@
+http:
+  port: "8081"
+evidence:
+  timeout: 10m
+models:
+  - "{{.MODEL_NAME}}"
+router_com:
+  check_compute_boot_exit: true
+  tpm:
+    device: "/dev/tpmrm0"
+    simulate: false
+    rek_handle: {{.REK_HANDLE}}
+  worker:
+    binary_path: /opt/confidentsec/bin/compute_worker
+    badge_public_key: "{{.BADGE_PUBLIC_KEY}}"
+    llm_base_url: "http://localhost:{{.INFERENCE_ENGINE_PORT}}"
+router_agent:
+  tags:
+    - llm
+    - "engine={{.INFERENCE_ENGINE}}"
+    - "cloud={{.CLOUD}}"
+  node_target_url: "{{.COMPUTE_SELF_URL}}"
+  node_healthcheck_url: "{{.COMPUTE_SELF_URL}}/_health"
+  router_base_url: "{{.ROUTER_URL}}"

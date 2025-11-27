@@ -1,0 +1,26 @@
+#!/bin/bash
+
+set -eux
+
+basedir=/opt/confidentsec
+targetdir=/var/confidentsec/etc
+mkdir -p "$targetdir"
+# shellcheck source=/dev/null
+. ${basedir}/etc/system.conf
+mkdir -p /run/environment.d
+touch /run/environment.d/system.conf
+# shellcheck source=/dev/null
+. /run/environment.d/system.conf
+
+if ! [[ -v INSTALL_NVIDIA ]]; then
+  INSTALL_NVIDIA=false
+fi
+
+sed -e "s,{{\.INSTALL_GPU}},${INSTALL_NVIDIA}," \
+    -e "s,{{\.MODEL_NAME}},${MODEL_NAME}," \
+    -e "s,{{\.COMPUTE_IMAGE_SIGSTORE_BUNDLE}},${COMPUTE_IMAGE_SIGSTORE_BUNDLE}," \
+    -e "s,{{\.TPM_TYPE}},${TPM_TYPE}," \
+    -e "s,{{\.INFERENCE_ENGINE}},${INFERENCE_ENGINE}," \
+    -e "s,{{\.INFERENCE_ENGINE_PORT}},${INFERENCE_ENGINE_PORT}," \
+    -e "s,{{\.INFERENCE_ENGINE_SERVICE_NAME}},${INFERENCE_ENGINE_SERVICE_NAME}," \
+    "${basedir}/etc/compute_boot.yaml.template" > "${targetdir}/compute_boot.yaml"

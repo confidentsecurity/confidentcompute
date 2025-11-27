@@ -1,0 +1,13 @@
+[Unit]
+Description=Pull in system configuration from CSP instance metadata.
+After=network-online.target
+Wants=network-online.target
+RequiresMountsFor=/opt
+
+[Service]
+Type=oneshot
+ExecStart=/opt/confidentsec/bin/system_conf.sh
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target

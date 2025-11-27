@@ -1,0 +1,20 @@
+inference_engine:
+  type: "{{.INFERENCE_ENGINE}}"
+  models:
+    - "{{.MODEL_NAME}}"
+  url: "http://localhost:{{.INFERENCE_ENGINE_PORT}}"
+  systemd_service_name: "{{.INFERENCE_ENGINE_SERVICE_NAME}}"
+tpm:
+  primary_key_handle: 0x81000001
+  child_key_handle: 0x81000002
+  rek_creation_ticket_handle: 0x0180000A
+  rek_creation_hash_handle: 0x0180000B
+  attestation_key_handle: 0x81000003
+  tpm_type: {{.TPM_TYPE}}
+  event_log_path: /sys/kernel/security/tpm0/binary_bios_measurements
+attestation:
+  fake_secret: "123456"
+gpu:
+  required: {{.INSTALL_GPU}}
+transparency:
+  image_sigstore_bundle: "{{.COMPUTE_IMAGE_SIGSTORE_BUNDLE}}"

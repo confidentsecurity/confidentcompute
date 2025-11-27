@@ -1,0 +1,393 @@
+// For a full configuration reference, see https://grafana.com/docs/alloy
+// Template variables are replaced at deploy-time with bin/install-alloy.sh
+// We use custom delimiters to avoid conflicts with the template syntax used in loki.process stages.
+
+loki.source.journal "journald" {
+  labels = {
+    hostname = sys.env("INSTANCE_NAME"),
+    node_type = sys.env("NODE_TYPE"),
+    stack_name = sys.env("STACK_NAME"),
+  }
+  format_as_json = true
+  forward_to    = [loki.process.normalize_loglevel.receiver]
+}
+
+// Journal logs use "PRIORITY" (int) to indicate the log level, but we want to use "level" (string)
+loki.process "normalize_loglevel" {
+  // Extract PRIORITY from the log entry
+  stage.json {
+    expressions = {
+      priority = "PRIORITY",
+    }
+  }
+
+  // The template is a go template, so we can use the go template syntax. This is also why we need to use custom delimiters.
+  stage.template {
+    source = "priority"
+    template = "{{ if eq .Value \"0\" }}emerg{{ else if eq .Value \"1\" }}alert{{ else if eq .Value \"2\" }}crit{{ else if eq .Value \"3\" }}error{{ else if eq .Value \"4\" }}warn{{ else if eq .Value \"5\" }}notice{{ else if eq .Value \"6\" }}info{{ else if eq .Value \"7\" }}debug{{ else }}unknown{{ end }}"
+  }
+
+  // Add the mapped value as a label
+  stage.labels {
+    values = {
+      level = "priority",
+    }
+  }
+
+  forward_to = [loki.process.drop_inference_engine.receiver]
+}
+
+loki.process "drop_inference_engine" {
+  // Extract data from fields for processing
+  // https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/#stagejson
+  stage.json {
+    expressions = {
+        executable = "_EXE",
+    }
+  }
+
+  // Drop all messages coming from the Ollama and vLLM processes.
+  // We may want to switch to using stage.match, which looks like it can create an allow-list
+  // https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/#stagematch
+  stage.drop {
+    source = "executable"
+    expression = ".*/ollama"
+  }
+
+  stage.drop {
+    source = "executable"
+    expression = ".*/vllm"
+  }
+
+  forward_to    = [loki.process.allow_list_processes.receiver]
+}
+
+loki.process "allow_list_processes" {
+  // Extract data from fields for processing
+  // https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/#stagejson
+  stage.json {
+    expressions = {
+      executable = "_EXE",
+      syslog_id = "SYSLOG_IDENTIFIER",
+    }
+  }
+  // For reasons unexplained, we need to extract the json above, AND make a label
+  // for success in the match stage.
+  stage.labels {
+    values = {
+      executable = "executable",
+      syslog_label = "syslog_id",
+    }
+  }
+
+  // Apply default label to all logs indicating that we'll drop them
+  stage.static_labels {
+    values = {
+      keep = "no",
+    }
+  }
+
+  // Keep Confident Security process logs
+  // https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/#stagematch
+  // explicitly skips `compute_worker` executable as that processes sensitive data.
+  stage.match {
+    selector = "{executable=~\".*/(compute_boot|router_com)$\"}"
+    stage.static_labels {
+      values = {
+        keep = "yes",
+      }
+    }
+  }
+
+  // Keep logs from observabiltiy stack tools
+  stage.match {
+    selector = "{executable=~\".*/(loki|grafana|tempo|mimir)$\"}"
+    stage.static_labels {
+      values = {
+        keep = "yes",
+      }
+    }
+  }
+
+  // Keep important system process logs
+  stage.match {
+    selector = "{executable=~\".*/(google_metadata_script_runner|systemd|sudo|sshd)$\"}"
+    stage.static_labels {
+      values = {
+        keep = "yes",
+      }
+    }
+  }
+
+  // Keep kernel logs
+  stage.match {
+    // In journald, kernel messages have SYSLOG_IDENTIFIER=kernel or _COMM=kernel
+    selector = "{syslog_label=\"kernel\"}"
+    stage.static_labels {
+      values = {
+        keep = "yes",
+      }
+    }
+  }
+
+  // Drop everything without the "keep = yes" label
+  stage.match {
+    selector = "{keep!=\"yes\"}"
+    stage.drop {
+      expression = ".*"
+    }
+  }
+
+  // Remove temp labels used for processing so as to not pollute the Loki index
+  stage.label_drop {
+    values = ["keep", "syslog_label"]
+  }
+
+  forward_to    = [loki.process.add_git_metadata.receiver]
+}
+
+loki.process "add_git_metadata" {
+  stage.static_labels {
+      values = {
+        git_sha_label = sys.env("GIT_SHA"),
+        github_run_id_label = sys.env("GITHUB_RUN_ID"),
+    }
+  }
+
+  stage.structured_metadata {
+    values = {
+      git_sha = "git_sha_label",
+      github_run_id = "github_run_id_label",
+    }
+  }
+
+  stage.label_drop {
+    values = ["git_sha_label", "github_run_id_label"]
+  }
+  forward_to    = [loki.process.expand_message_field.receiver]
+}
+
+// Added this process step to try to make debugging easier.
+// I'm leaving it in but commented so someone can use it again later.
+//loki.process "drop_healthchecks" {
+//  stage.drop {
+//    expression = ".*GET ._health.*"
+//  }
+//  stage.drop {
+//    expression = ".*GET ._ready.*"
+//  }
+//
+//  forward_to    = [loki.process.expand_message_field.receiver]
+//}
+
+loki.process "expand_message_field" {
+  // if source is empty, then grafana assumes "MESSAGE" is source.
+  stage.match {
+    // Figuring this out was a nightmare: I tried multiple combinations of \{ \} \\\" to
+    // make sure this was only selecting the right quoted time. Alloy's parser is weird and
+    // choked on a bunch of those combinations. This seems right when I do livedebugging on Alloy
+    // and making this match a drop command. - @eady
+    selector = "{job=\"loki.source.journal.journald\"} |~ \"time\""
+
+    stage.json {
+      expressions = {
+        message = "MESSAGE",
+      }
+    }
+
+    stage.structured_metadata {
+      values = {
+        raw_message = "message",
+      }
+    }
+
+    stage.json {
+      source = "message"
+      expressions = {
+        app_time = "time",
+        app_level = "level",
+        app_source = "source",
+        app_msg = "msg",
+        app_cmd_id = "cmd_id",
+        app_count = "count",
+        app_trace_id = "trace_id",
+        app_span_id = "span_id",
+        app_error = "error",
+        app_http_duration_ms = "duration_ms",
+        app_http_start = "request_start",
+        app_http_url = "url",
+        app_http_status_code = "status_code",
+        app_http_response_size = "response_size",
+        app_http_referrer = "referer",
+        app_http_user_agent = "user_agent",
+      }
+    }
+    stage.json {
+      source = "app_source"
+      expressions = {
+        app_function = "function",
+        app_file = "file",
+        app_line = "line",
+      }
+    }
+
+    stage.labels {
+      values = {
+        level = "app_level",
+      }
+    }
+
+    stage.template {
+      source = "app_msg_src"
+      template = "{{ .app_file }}:{{ .app_line }} - {{ .app_function }}"
+    }
+
+    stage.replace {
+      expression = "(.*)"
+      replace = "{{ .app_level }} - {{ .hostname }} {{ if .app_msg }}msg: {{ .app_msg }}{{ else if .app_error }}err: {{ .app_error }}{{ else }}{{ .MESSAGE }}{{ end }}"
+    }
+
+    stage.structured_metadata {
+      values = {
+        app_time = "",
+        app_msg = "",
+        app_error = "",
+        app_msg_src = "",
+        app_trace_id = "",
+        app_span_id = "",
+        app_cmd_id = "",
+        app_http_duration_ms = "",
+        app_http_start = "",
+        app_http_url = "",
+        app_http_status_code = "",
+        app_http_response_size = "",
+        app_http_referrer = "",
+        app_http_user_agent = "",
+      }
+    }
+  }
+  forward_to    = [loki.relabel.lowercase_loglevel.receiver]
+ }
+
+// make sure levels are always lowercase
+ loki.relabel "lowercase_loglevel" {
+    rule {
+      action = "lowercase"
+      source_labels = ["level"]
+      target_label = "level"
+      regex = "(.*)"
+      replacement = "$1"
+    }
+    forward_to    = [loki.write.loki_service.receiver]
+ }
+
+// Use this to help debug sources, but don't use it in final configs.
+// forward_to    = [loki.echo.debug.receiver, loki.write.local.receiver]
+loki.echo "debug" {}
+
+loki.write "loki_service" {
+  endpoint {
+    url = sys.env("LOKI_URL")
+  }
+}
+
+otelcol.receiver.otlp "local" {
+  grpc {
+    endpoint = "127.0.0.1:4317"
+  }
+
+  http {
+    endpoint = "127.0.0.1:4318"
+  }
+
+  output {
+    metrics = [otelcol.processor.attributes.env_label.input]
+    logs    = [otelcol.processor.attributes.env_label.input]
+    traces  = [otelcol.processor.attributes.env_label.input]
+  }
+}
+
+otelcol.processor.attributes "env_label" {
+  action {
+    key = "hostname"
+    value = sys.env("INSTANCE_NAME")
+    action = "insert"
+  }
+  action {
+    key = "node_type"
+    value = sys.env("NODE_TYPE")
+    action = "insert"
+  }
+  action {
+    key = "stack_name"
+    value = sys.env("STACK_NAME")
+    action = "insert"
+  }
+  output {
+    metrics = [otelcol.processor.memory_limiter.local.input]
+    logs    = [otelcol.processor.memory_limiter.local.input]
+    traces  = [otelcol.processor.filter.compute_node_span_filter.input]
+  }
+}
+
+// Processor to selectively filter spans from "compute" nodes:
+//    - Filter out everything but  "HTTP POST" for compute nodes, other spans are kept.
+// https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.processor.filter/
+otelcol.processor.filter "compute_node_span_filter" {
+  error_mode = "ignore" // Oddly, this is the recommended mode.
+
+  // Spans are DROPPED if this condition evaluates to true.
+  traces {
+    span = [
+      "attributes[\"node_type\"] == \"hardcompute\" and name != \"HTTP POST\" and name != \"POST /\" and name != \"computeworker.Run\"",
+    ]
+  }
+
+  output {
+    traces = [otelcol.processor.transform.compute_node_attribute_filter.input]
+  }
+}
+
+// Processor to conditionally filter attributes:
+//    - If node_type == "hardcompute", then keep only attributes: node_type, hostname, stack_name.
+//    - If node_type != "hardcompute", span attributes are not changed by this rule.
+// https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.processor.transform
+otelcol.processor.transform "compute_node_attribute_filter" {
+  error_mode = "ignore"
+
+  trace_statements {
+    context = "span"
+    statements = [
+      "keep_keys(attributes, [\"node_type\", \"hostname\", \"stack_name\", \"http.status_code\", \"http.method\"]) where attributes[\"node_type\"] == \"hardcompute\"",
+    ]
+  }
+
+  output {
+    traces = [otelcol.processor.memory_limiter.local.input]
+  }
+}
+
+otelcol.processor.memory_limiter "local" {
+  check_interval = "1s"
+  limit          = "1GiB"
+
+  output {
+    metrics = [otelcol.processor.batch.local.input]
+    logs    = [otelcol.processor.batch.local.input]
+    traces  = [otelcol.processor.batch.local.input]
+  }
+}
+
+otelcol.processor.batch "local" {
+  output {
+    metrics = [otelcol.exporter.otlphttp.tempo.input]
+    logs    = [otelcol.exporter.otlphttp.tempo.input]
+    traces  = [otelcol.exporter.otlphttp.tempo.input]
+  }
+}
+
+otelcol.exporter.otlphttp "tempo" {
+  client {
+    endpoint = sys.env("TEMPO_URL")
+  }
+}
