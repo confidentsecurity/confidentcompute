@@ -1202,6 +1202,9 @@ elif [ "$CLOUD" = "qemu" ]; then
 ### tuple ### allow tcp 53 10.0.2.3/32 any 0.0.0.0/0 out
 -A ufw-user-output -d 10.0.2.3/32 -p tcp --dport 53 -j ACCEPT # QEMU DNS
 
+### tuple ### allow tcp 8081 10.0.2.15/32 any 0.0.0.0/0 in
+-A ufw-user-input -d 10.0.2.15/32 -p tcp --dport 8081 -j ACCEPT # router_com
+
 ### END RULES ###
 
 COMMIT
