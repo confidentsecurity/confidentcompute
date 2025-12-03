@@ -879,44 +879,12 @@ elif [ "\${model_type}" = "vllm" ]; then
 	model_hash="\${MODEL_HASH_RESULT[0]}"
 
 	# Create a config files for vLLM with proper model path and model name.
-	tensor_parallel_size="\$(fetch_${CLOUD}_instance_metadata "VLLM_TENSOR_PARALLEL_SIZE" || echo '1')"
+	config_yaml="\$(fetch_${CLOUD}_instance_metadata "VLLM_CONFIG" || echo '')"
 	model_path="\${VLLM_MODELS_DIR#\$MOUNT_PREFIX}/model0"
-	context_length="\$(jq -r '.max_position_embeddings' "\${VLLM_MODELS_DIR}/model0/config.json")"
+	config_path="\${VLLM_DIR}/config.yaml"
 
-	cat <<-EOF_CONFIG > "\${VLLM_DIR}/config-cpu.yaml"
-	# config-cpu.yaml
-	model: "\${model_path}"
-	served-model-name: "\${MODEL_NAME}"
-	tensor_parallel_size: \${tensor_parallel_size}
-	disable-sliding-window: true
-	dtype: bfloat16
-	swap-space: 1
-	max-num-seqs: 256
-	max-num-batched-tokens: 2048
-	enable-chunked-prefill: true
-	generation-config: vllm
-	hf-overrides: '{"sliding_window": \${context_length}}'
-	port: 11435
-	host: 0.0.0.0
-	EOF_CONFIG
-
-	cat <<-EOF_CONFIG > "\${VLLM_DIR}/config-gpu.yaml"
-	# config-gpu.yaml
-	model: "\${model_path}"
-	served-model-name: "\${MODEL_NAME}"
-	tensor_parallel_size: \${tensor_parallel_size}
-	disable-sliding-window: false
-	dtype: bfloat16
-	max-num-seqs: 512
-	max-num-batched-tokens: 8192
-	enable-chunked-prefill: true
-	enable-prefix-caching: true
-	block-size: 16
-	generation-config: vllm
-	gpu-memory-utilization: 0.95
-	port: 11435
-	host: 0.0.0.0
-	EOF_CONFIG
+	echo "\${config_yaml}" > "\${config_path}"
+	echo "model: \"\${model_path}\"" >> "\${config_path}"
 fi
 
 if [ "$CLOUD" = "azure" ]; then

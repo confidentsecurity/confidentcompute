@@ -79,7 +79,7 @@ Environment=HF_DATASETS_OFFLINE=1
 Environment=TRANSFORMERS_OFFLINE=1
 
 ExecStartPre=/usr/bin/mkdir -p /tmp/hf_home /tmp/vllm_cache
-ExecStart=/usr/vllm/vllm-env-gpu/bin/vllm serve --config /models/vllm/config-gpu.yaml
+ExecStart=/usr/vllm/vllm-env-gpu/bin/vllm serve --config /models/vllm/config.yaml
 
 Restart=always
 RestartSec=3
@@ -113,7 +113,7 @@ Environment=HF_DATASETS_OFFLINE=1
 Environment=TRANSFORMERS_OFFLINE=1
 
 ExecStartPre=/usr/bin/mkdir -p /tmp/hf_home /tmp/vllm_cache
-ExecStart=/usr/vllm/vllm-env-cpu/bin/vllm serve --config /models/vllm/config-cpu.yaml
+ExecStart=/usr/vllm/vllm-env-cpu/bin/vllm serve --config /models/vllm/config.yaml
 
 Restart=always
 RestartSec=3
