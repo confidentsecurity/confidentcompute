@@ -14,7 +14,7 @@ fetch_azure_instance_ip() {
 }
 
 fetch_azure_instance_userdata() {
-	curl -sf -H "Metadata:true" --noproxy "*" "http://169.254.169.254/metadata/instance/compute/userData?api-version=2021-02-01&format=text" | jq -R .
+	curl -sf -H "Metadata:true" --noproxy "*" "http://169.254.169.254/metadata/instance/compute/userData?api-version=2021-02-01&format=text" | base64 -d | jq -R .
 }
 
 # The Azure metadata API returns values with double quotes, so we can just echo the values as is.
@@ -41,7 +41,7 @@ expose_var "INSTANCE_NAME" "$value" "$ENV_FILE"
 value="$(fetch_azure_instance_ip)"
 expose_var "INSTANCE_IP" "$value" "$ENV_FILE"
 
-value="$(fetch_azure_instance_userdata)"
+value="$(fetch_azure_instance_userdata | jq -r . | jq -r .sigstore_bundle_b64 | jq -R .)"
 expose_var "COMPUTE_IMAGE_SIGSTORE_BUNDLE" "$value" "$ENV_FILE"
 
 expose_var "TPM_TYPE" "Azure" "$ENV_FILE"

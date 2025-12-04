@@ -879,7 +879,11 @@ elif [ "\${model_type}" = "vllm" ]; then
 	model_hash="\${MODEL_HASH_RESULT[0]}"
 
 	# Create a config files for vLLM with proper model path and model name.
-	config_yaml="\$(fetch_${CLOUD}_instance_metadata "VLLM_CONFIG" || echo '')"
+	if [ "$CLOUD" = "azure" ]; then
+		config_yaml="\$(fetch_azure_instance_userdata | jq -r . | jq -r .vllm_config_yaml || echo '')"
+	else
+		config_yaml="\$(fetch_${CLOUD}_instance_metadata "VLLM_CONFIG" || echo '')"
+	fi
 	model_path="\${VLLM_MODELS_DIR#\$MOUNT_PREFIX}/model0"
 	config_path="\${VLLM_DIR}/config.yaml"
 

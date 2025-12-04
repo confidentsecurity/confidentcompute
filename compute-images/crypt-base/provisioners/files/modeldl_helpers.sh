@@ -16,6 +16,10 @@ fetch_azure_instance_metadata() {
     curl -sf -H "Metadata:true" --noproxy "*" "http://169.254.169.254/metadata/instance/compute?api-version=2021-02-01" | jq -r '.tagsList[] | select(.name == "'"$metadata_key"'") | .value' || $HARDEN_DRACUT_PANIC
 }
 
+fetch_azure_instance_userdata() {
+    curl -sf -H "Metadata:true" --noproxy "*" "http://169.254.169.254/metadata/instance/compute/userData?api-version=2021-02-01&format=text" | base64 -d | jq -R .
+}
+
 fetch_gcp_instance_metadata() {
     metadata_key=$1
     curl -sf -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/attributes/$metadata_key" || $HARDEN_DRACUT_PANIC
