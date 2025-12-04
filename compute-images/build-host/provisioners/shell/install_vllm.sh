@@ -77,6 +77,8 @@ Environment=VLLM_USE_V1=1
 # Disable downloading models from the internet
 Environment=HF_DATASETS_OFFLINE=1
 Environment=TRANSFORMERS_OFFLINE=1
+# Triton (pytorch) cache needs to be in a writeable directory
+Environment=TRITON_CACHE_DIR=/tmp/.triton
 
 ExecStartPre=/usr/bin/mkdir -p /tmp/hf_home /tmp/vllm_cache
 ExecStart=/usr/vllm/vllm-env-gpu/bin/vllm serve --config /models/vllm/config.yaml
@@ -111,6 +113,8 @@ Environment=VLLM_CPU_KVCACHE_SPACE=1
 # Disable downloading models from the internet
 Environment=HF_DATASETS_OFFLINE=1
 Environment=TRANSFORMERS_OFFLINE=1
+# Triton (pytorch) cache needs to be in a writeable directory
+Environment=TRITON_CACHE_DIR=/tmp/.triton
 
 ExecStartPre=/usr/bin/mkdir -p /tmp/hf_home /tmp/vllm_cache
 ExecStart=/usr/vllm/vllm-env-cpu/bin/vllm serve --config /models/vllm/config.yaml
