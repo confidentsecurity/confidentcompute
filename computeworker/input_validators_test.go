@@ -508,12 +508,13 @@ func TestBodyValidator(t *testing.T) {
 				wantErr:  true,
 				wantCode: ErrInvalidJSON,
 			},
-			{
-				name:     "unknown_field",
-				payload:  `{"model":"llama3.2:1b","prompt":"Hello","unknown_field":"value"}`,
-				wantErr:  true,
-				wantCode: ErrInvalidJSON,
-			},
+			// TODO (CS-1278): We may want to strictly validate inference request body parameteres using a known allow list.
+			//{
+			//	name:     "unknown_field",
+			//	payload:  `{"model":"llama3.2:1b","prompt":"Hello","unknown_field":"value"}`,
+			//	wantErr:  true,
+			//	wantCode: ErrInvalidJSON,
+			//},
 			{
 				name:     "invalid_property_type",
 				payload:  `{"model":"llama3.2:1b","prompt":{"nested":"value"}}`,
@@ -654,12 +655,13 @@ func TestBodyValidator(t *testing.T) {
 				wantErr:  true,
 				wantCode: ErrInvalidJSON,
 			},
-			{
-				name:     "unknown_field",
-				payload:  `{"model":"llama3.2:1b","messages":[],"unknown_field":"value"}`,
-				wantErr:  true,
-				wantCode: ErrInvalidJSON,
-			},
+			// TODO (CS-1278): We may want to strictly validate inference request body parameteres using a known allow list.
+			//{
+			//	name:     "unknown_field",
+			//	payload:  `{"model":"llama3.2:1b","messages":[],"unknown_field":"value"}`,
+			//	wantErr:  true,
+			//	wantCode: ErrInvalidJSON,
+			//},
 			{
 				name:     "invalid_property_type",
 				payload:  `{"model":"llama3.2:1b","messages":{"as":"object"}}`,
@@ -760,12 +762,13 @@ func TestBodyValidator(t *testing.T) {
 				wantErr:  true,
 				wantCode: ErrInvalidJSON,
 			},
-			{
-				name:     "unknown_field",
-				payload:  `{"model":"llama3.2:1b","prompt":"Hello","unknown_field":"value"}`,
-				wantErr:  true,
-				wantCode: ErrInvalidJSON,
-			},
+			// TODO (CS-1278): We may want to strictly validate inference request body parameteres using a known allow list.
+			//{
+			//	name:     "unknown_field",
+			//	payload:  `{"model":"llama3.2:1b","prompt":"Hello","unknown_field":"value"}`,
+			//	wantErr:  true,
+			//	wantCode: ErrInvalidJSON,
+			//},
 			{
 				name:     "invalid_property_type",
 				payload:  `{"model":"llama3.2:1b","prompt":{"nested":"value"}}`,
@@ -889,12 +892,13 @@ func TestBodyValidator(t *testing.T) {
 				wantErr:  true,
 				wantCode: ErrInvalidJSON,
 			},
-			{
-				name:     "unknown_field",
-				payload:  `{"model":"llama3.2:1b","messages":[],"unknown_field":"value"}`,
-				wantErr:  true,
-				wantCode: ErrInvalidJSON,
-			},
+			// TODO (CS-1278): We may want to strictly validate inference request body parameteres using a known allow list.
+			//{
+			//	name:     "unknown_field",
+			//	payload:  `{"model":"llama3.2:1b","messages":[],"unknown_field":"value"}`,
+			//	wantErr:  true,
+			//	wantCode: ErrInvalidJSON,
+			//},
 			{
 				name:     "invalid_property_type",
 				payload:  `{"model":"llama3.2:1b","messages":"not_an_array"}`,

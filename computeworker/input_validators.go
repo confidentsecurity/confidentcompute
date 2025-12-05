@@ -444,7 +444,7 @@ type OpenAIRequestBodyCompletions struct {
 	Stream        bool                            `json:"stream,omitempty"`
 	StreamOptions *OpenAIRequestBodyStreamOptions `json:"stream_options,omitempty"`
 	Suffix        string                          `json:"suffix,omitempty"`
-	Temperature   int                             `json:"temperature,omitempty"`
+	Temperature   float64                         `json:"temperature,omitempty"`
 	TopP          int                             `json:"top_p,omitempty"`
 	User          string                          `json:"user,omitempty"`
 	// [TBD]: vLLM has exra params that aren't a part of OpenAI spec, e.g:
@@ -511,7 +511,7 @@ type OpenAIRequestBodyChat struct {
 	Stop                any                             `json:"stop,omitempty"` // string / array / null
 	Stream              bool                            `json:"stream,omitempty"`
 	StreamOptions       *OpenAIRequestBodyStreamOptions `json:"stream_options,omitempty"`
-	Temperature         int                             `json:"temperature,omitempty"`
+	Temperature         float64                         `json:"temperature,omitempty"`
 	ToolChoice          any                             `json:"tool_choice,omitempty"` // string / object / null
 	Tools               []any                           `json:"tools,omitempty"`       // array / null
 	TopLogProbs         int                             `json:"top_logprobs,omitempty"`
@@ -592,7 +592,7 @@ func (v BodyValidator) ValidateWithBadge(r *http.Request, b *credentialing.Badge
 	requestBody := bodyBuilder()
 
 	decoder := json.NewDecoder(bytes.NewReader(body))
-	decoder.DisallowUnknownFields()
+	// TODO (CS-1278): We may want to strictly validate inference request body parameteres using a known allow list.
 
 	if err := decoder.Decode(&requestBody); err != nil {
 		return newValidationError(ErrInvalidJSON, "failed to decode request body: "+err.Error())

@@ -1,7 +1,7 @@
 http:
   port: "8081"
 evidence:
-  timeout: 10m
+  timeout: 30m
 models:
   - "{{.MODEL_NAME}}"
 router_com:

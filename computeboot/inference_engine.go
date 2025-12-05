@@ -115,6 +115,8 @@ func (eng *InferenceEngineInitializer) WaitUntilReady(ctx context.Context) error
 				slog.InfoContext(ctx, "inference engine service is ready")
 				return nil
 			}
+		} else {
+			slog.InfoContext(ctx, "Unable to reach inference engine, trying again", "url", url)
 		}
 
 		select {

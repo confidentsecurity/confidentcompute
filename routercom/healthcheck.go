@@ -23,6 +23,15 @@ import (
 	"github.com/openpcc/openpcc/httpfmt"
 )
 
+// healthHandler returns a health check response compatible with Azure Application Health Extension v2.
+// Azure expects: {"ApplicationHealthState": "Healthy"}
+// GCP health checks only look at HTTP status code, so this is compatible with both.
+// xref https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-health-extension?tabs=rest-api#rich-health-states
+// TODO (CS-1277): We may want to adjust our router_com health check to start sooner and return unhealthy if attestation fails.
 func (*Service) healthHandler(w http.ResponseWriter, r *http.Request) {
-	httpfmt.JSONHealthCheck(w, r)
+	type body struct {
+		ApplicationHealthState string `json:"ApplicationHealthState"`
+	}
+
+	httpfmt.JSON(w, r, body{ApplicationHealthState: "Healthy"}, http.StatusOK)
 }
