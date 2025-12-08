@@ -79,8 +79,10 @@ Environment=HF_DATASETS_OFFLINE=1
 Environment=TRANSFORMERS_OFFLINE=1
 # Triton (pytorch) cache needs to be in a writeable directory
 Environment=TRITON_CACHE_DIR=/tmp/.triton
+Environment=VLLM_CONFIG_ROOT=/var/log/vllm
 
 ExecStartPre=/usr/bin/mkdir -p /tmp/hf_home /tmp/vllm_cache
+ExecStartPre=restorecon -R /tmp/hf_home /tmp/vllm_cache /models/vllm
 ExecStart=/usr/vllm/vllm-env-gpu/bin/vllm serve --config /models/vllm/config.yaml
 
 Restart=always
@@ -115,8 +117,10 @@ Environment=HF_DATASETS_OFFLINE=1
 Environment=TRANSFORMERS_OFFLINE=1
 # Triton (pytorch) cache needs to be in a writeable directory
 Environment=TRITON_CACHE_DIR=/tmp/.triton
+Environment=VLLM_CONFIG_ROOT=/var/log/vllm
 
 ExecStartPre=/usr/bin/mkdir -p /tmp/hf_home /tmp/vllm_cache
+ExecStartPre=restorecon -R /tmp/hf_home /tmp/vllm_cache /models/vllm
 ExecStart=/usr/vllm/vllm-env-cpu/bin/vllm serve --config /models/vllm/config.yaml
 
 Restart=always

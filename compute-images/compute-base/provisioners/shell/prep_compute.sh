@@ -296,6 +296,12 @@ systemctl --root=/mnt/aux enable router_com.service
 # vllm services
 systemctl --root=/mnt/aux enable vllm-cpu.service
 systemctl --root=/mnt/aux enable vllm-gpu.service
+# Create VLLM_CONFIG_ROOT directory
+mkdir -p /mnt/aux/var/log/vllm
+# creating this file will disable default vLLM behavior of sending metrics to
+# its server and writing them to a file. This does not disable metrics collection
+# within the service, and it's still possible to get metrics via the /metrics endpoint.
+touch /mnt/aux/var/log/vllm/do_not_track
 
 ls -l /mnt/aux/etc/systemd/system/multi-user.target.wants
 

@@ -22,6 +22,7 @@ HARDEN_INTEGRITY_FLAGS=""
 HARDEN_VERITY_MODE="ignore-corruption"
 HARDEN_DRACUT_PANIC="emergency_shell"
 HARDEN_NO_SERIAL=0
+DISABLE_VLLM_METRICS="false"
 
 case "$CONFSEC_HARDENING_SCOPE" in
 0)
@@ -32,6 +33,7 @@ case "$CONFSEC_HARDENING_SCOPE" in
 	# rd.shell=0 to prevents access to a shell if boot fails
 	HARDEN_KERNEL_CMDLINE+=" enforcing=1 lockdown=confidentiality rd.emergency=reboot rd.shell=0"
 	HARDEN_DRACUT_PANIC="die"
+	DISABLE_VLLM_METRICS="true"
 	;;
 1)
 	HARDEN_KERNEL_CMDLINE+=" enforcing=1"
@@ -889,6 +891,7 @@ elif [ "\${model_type}" = "vllm" ]; then
 
 	echo "\${config_yaml}" > "\${config_path}"
 	echo "model: \"\${model_path}\"" >> "\${config_path}"
+	echo "disable-log-stats: ${DISABLE_VLLM_METRICS}" >> "\${config_path}"
 fi
 
 if [ "$CLOUD" = "azure" ]; then

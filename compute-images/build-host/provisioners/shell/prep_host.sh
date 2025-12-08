@@ -40,7 +40,8 @@ apt-get -y install \
 	ufw \
 	unzip \
 	zsh \
-	jq
+	jq \
+	aria2
 
 # ufw
 ufw enable
