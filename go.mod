@@ -20,8 +20,8 @@ require (
 	github.com/lmittmann/tint v1.1.2
 	github.com/mattn/go-isatty v0.0.20
 	github.com/ollama/ollama v0.13.0
-	github.com/openpcc/openpcc v0.0.55
-	github.com/openpcc/twoway v0.0.55
+	github.com/openpcc/openpcc v0.0.60
+	github.com/openpcc/twoway v0.0.60
 	github.com/quic-go/quic-go v0.56.0
 	github.com/stretchr/testify v1.11.1
 	go.opentelemetry.io/otel v1.38.0
@@ -33,8 +33,8 @@ require (
 )
 
 require (
-	github.com/openpcc/bhttp v0.0.55 // indirect
-	github.com/openpcc/ohttp v0.0.55 // indirect
+	github.com/openpcc/bhttp v0.0.60 // indirect
+	github.com/openpcc/ohttp v0.0.60 // indirect
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c // indirect
 )
 

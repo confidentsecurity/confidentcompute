@@ -64,6 +64,7 @@ func Receive(ctx context.Context, cfg ReceiveConfig) (ev.SignedEvidenceList, err
 		return nil, fmt.Errorf("failed to remove existing socket: %w", err)
 	}
 
+	slog.InfoContext(ctx, "Listening for evidence", "socket", cfg.Socket, "timeout", cfg.Timeout)
 	listener, err := net.Listen("unix", cfg.Socket)
 	if err != nil {
 		return nil, fmt.Errorf("failed to listen on socket: %w", err)

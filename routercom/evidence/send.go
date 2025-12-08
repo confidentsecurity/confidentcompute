@@ -21,6 +21,7 @@ import (
 	"context"
 	"encoding/binary"
 	"fmt"
+	"log/slog"
 	"math"
 	"net"
 	"time"
@@ -85,6 +86,7 @@ func connect(ctx context.Context, cfg SenderConfig) (net.Conn, error) {
 	if cfg.MaxRetries < 0 {
 		return nil, fmt.Errorf("invalid max retries: %d", cfg.MaxRetries)
 	}
+	slog.InfoContext(ctx, "Connecting to receiver", "socket", cfg.Socket, "max_retries", cfg.MaxRetries, "retry_interval", cfg.RetryInterval)
 	backoffCfg := backoff.WithContext(backoff.WithMaxRetries(backoff.NewConstantBackOff(cfg.RetryInterval), uint64(cfg.MaxRetries)), ctx)
 	err := backoff.Retry(func() error {
 		c, dialErr := net.Dial("unix", cfg.Socket)
