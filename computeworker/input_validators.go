@@ -481,7 +481,7 @@ func (b *OpenAIRequestBodyCompletions) Validate(supportedModels []string) (strin
 
 // https://platform.openai.com/docs/api-reference/chat/create
 type OpenAIRequestBodyChatMessage struct {
-	Content string `json:"content"`
+	Content any    `json:"content"`
 	Role    string `json:"role"`
 	Name    string `json:"name,omitempty"`
 	// Assistant is the only role that can have audio and tool calls.

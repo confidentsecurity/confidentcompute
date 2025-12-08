@@ -633,8 +633,23 @@ func TestBodyValidator(t *testing.T) {
   "options": {
     "temperature": 0
   }
-}
-				`,
+}`,
+				wantErr: false,
+			},
+			{
+				name: "contents_array",
+				payload: `{
+	"model": "llama3.2:1b",
+	"messages": [
+		{
+			"role": "user",
+			"content": [
+				{"type": "text", "text": "image test"},
+				{"type": "image_url", "image_url": {"url": "data:image/png;base64,abcd"}}
+			]
+		}
+	]
+}`,
 				wantErr: false,
 			},
 			{
