@@ -4,6 +4,8 @@ RequiresMountsFor=/opt
 After=network.target
 After=router_com.service
 After=alloy.service
+Wants=nvidia-persistenced.service
+After=nvidia-persistenced.service
 Requires=router_com.service
 Requires=alloy.service
 
