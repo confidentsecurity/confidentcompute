@@ -508,13 +508,12 @@ func TestBodyValidator(t *testing.T) {
 				wantErr:  true,
 				wantCode: ErrInvalidJSON,
 			},
-			// TODO (CS-1278): We may want to strictly validate inference request body parameteres using a known allow list.
-			//{
-			//	name:     "unknown_field",
-			//	payload:  `{"model":"llama3.2:1b","prompt":"Hello","unknown_field":"value"}`,
-			//	wantErr:  true,
-			//	wantCode: ErrInvalidJSON,
-			//},
+			{
+				name:     "unknown_field",
+				payload:  `{"model":"llama3.2:1b","prompt":"Hello","unknown_field":"value"}`,
+				wantErr:  true,
+				wantCode: ErrInvalidJSON,
+			},
 			{
 				name:     "invalid_property_type",
 				payload:  `{"model":"llama3.2:1b","prompt":{"nested":"value"}}`,
@@ -670,13 +669,12 @@ func TestBodyValidator(t *testing.T) {
 				wantErr:  true,
 				wantCode: ErrInvalidJSON,
 			},
-			// TODO (CS-1278): We may want to strictly validate inference request body parameteres using a known allow list.
-			//{
-			//	name:     "unknown_field",
-			//	payload:  `{"model":"llama3.2:1b","messages":[],"unknown_field":"value"}`,
-			//	wantErr:  true,
-			//	wantCode: ErrInvalidJSON,
-			//},
+			{
+				name:     "unknown_field",
+				payload:  `{"model":"llama3.2:1b","messages":[],"unknown_field":"value"}`,
+				wantErr:  true,
+				wantCode: ErrInvalidJSON,
+			},
 			{
 				name:     "invalid_property_type",
 				payload:  `{"model":"llama3.2:1b","messages":{"as":"object"}}`,
@@ -745,6 +743,11 @@ func TestBodyValidator(t *testing.T) {
 				wantErr: false,
 			},
 			{
+				name:    "valid_payload_with_float_temperature",
+				payload: `{"model":"llama3.2:1b","prompt":"Why is the sky blue?","temperature":0.7,"stream":false}`,
+				wantErr: false,
+			},
+			{
 				name:    "stream_without_stream_options",
 				payload: `{"model":"llama3.2:1b","prompt":"Hello","stream":true}`,
 				wantErr: false,
@@ -777,13 +780,12 @@ func TestBodyValidator(t *testing.T) {
 				wantErr:  true,
 				wantCode: ErrInvalidJSON,
 			},
-			// TODO (CS-1278): We may want to strictly validate inference request body parameteres using a known allow list.
-			//{
-			//	name:     "unknown_field",
-			//	payload:  `{"model":"llama3.2:1b","prompt":"Hello","unknown_field":"value"}`,
-			//	wantErr:  true,
-			//	wantCode: ErrInvalidJSON,
-			//},
+			{
+				name:     "unknown_field",
+				payload:  `{"model":"llama3.2:1b","prompt":"Hello","unknown_field":"value"}`,
+				wantErr:  true,
+				wantCode: ErrInvalidJSON,
+			},
 			{
 				name:     "invalid_property_type",
 				payload:  `{"model":"llama3.2:1b","prompt":{"nested":"value"}}`,
@@ -870,6 +872,11 @@ func TestBodyValidator(t *testing.T) {
 				wantErr: false,
 			},
 			{
+				name:    "valid_payload_with_float_temperature",
+				payload: `{"model":"llama3.2:1b","messages":[{"role":"user","content":"Hello"}],"temperature":0.7,"stream":false}`,
+				wantErr: false,
+			},
+			{
 				name:    "stream_without_stream_options",
 				payload: `{"model":"llama3.2:1b","messages":[{"role":"user","content":"Hello"}],"stream":true}`,
 				wantErr: false,
@@ -907,13 +914,12 @@ func TestBodyValidator(t *testing.T) {
 				wantErr:  true,
 				wantCode: ErrInvalidJSON,
 			},
-			// TODO (CS-1278): We may want to strictly validate inference request body parameteres using a known allow list.
-			//{
-			//	name:     "unknown_field",
-			//	payload:  `{"model":"llama3.2:1b","messages":[],"unknown_field":"value"}`,
-			//	wantErr:  true,
-			//	wantCode: ErrInvalidJSON,
-			//},
+			{
+				name:     "unknown_field",
+				payload:  `{"model":"llama3.2:1b","messages":[],"unknown_field":"value"}`,
+				wantErr:  true,
+				wantCode: ErrInvalidJSON,
+			},
 			{
 				name:     "invalid_property_type",
 				payload:  `{"model":"llama3.2:1b","messages":"not_an_array"}`,
@@ -1060,6 +1066,49 @@ func TestBodyValidator(t *testing.T) {
 					require.NoError(t, err)
 					require.Equal(t, tc.expectDirty, dirty, "Dirty flag should match expectation")
 				}
+			})
+		}
+	})
+
+	t.Run("vllm extra params", func(t *testing.T) {
+		testCases := []struct {
+			name    string
+			path    string
+			payload string
+		}{
+			{
+				name:    "completions_with_repetition_penalty",
+				path:    "/v1/completions",
+				payload: `{"model":"llama3.2:1b","prompt":"Hello","repetition_penalty":1.5}`,
+			},
+			{
+				name:    "completions_with_ignore_eos",
+				path:    "/v1/completions",
+				payload: `{"model":"llama3.2:1b","prompt":"Hello","ignore_eos":true}`,
+			},
+			{
+				name:    "chat_with_repetition_penalty",
+				path:    "/v1/chat/completions",
+				payload: `{"model":"llama3.2:1b","messages":[{"role":"user","content":"Hello"}],"repetition_penalty":1.5}`,
+			},
+			{
+				name:    "chat_with_ignore_eos",
+				path:    "/v1/chat/completions",
+				payload: `{"model":"llama3.2:1b","messages":[{"role":"user","content":"Hello"}],"ignore_eos":true}`,
+			},
+		}
+
+		for _, tc := range testCases {
+			t.Run(tc.name, func(t *testing.T) {
+				bodyBuilder, found := validator.RouteBodyTypes[tc.path]
+				require.True(t, found)
+
+				requestBody := bodyBuilder()
+				err := json.Unmarshal([]byte(tc.payload), &requestBody)
+				require.NoError(t, err, "Should unmarshal vllm extra params")
+
+				_, _, err = requestBody.Validate(validator.SupportedModels)
+				require.NoError(t, err)
 			})
 		}
 	})

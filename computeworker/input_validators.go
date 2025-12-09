@@ -453,6 +453,10 @@ type OpenAIRequestBodyCompletions struct {
 	// We probably should not support this and stick to the core OpenAI spec to not commit
 	// to the specific workload implementation, and also to not disclose it.
 	// Additionally, at least this "min_tokens" parameters was plain buggy in my tests.
+
+	// Specifically "allow listed" additional VLLM params (to support vllm benchmarking):
+	RepetitionPenalty float64 `json:"repetition_penalty,omitempty"`
+	IgnoreEOS         bool    `json:"ignore_eos,omitempty"`
 }
 
 func (b *OpenAIRequestBodyCompletions) Validate(supportedModels []string) (string, bool, error) {
@@ -526,6 +530,10 @@ type OpenAIRequestBodyChat struct {
 	// * web_search_options
 	//
 	// vLLM exra params: https://docs.vllm.ai/en/latest/serving/openai_compatible_server.html#id7
+
+	// Specifically "allow listed" additional VLLM params (to support vllm benchmarking):
+	RepetitionPenalty float64 `json:"repetition_penalty,omitempty"`
+	IgnoreEOS         bool    `json:"ignore_eos,omitempty"`
 }
 
 func (b *OpenAIRequestBodyChat) Validate(supportedModels []string) (string, bool, error) {
@@ -592,7 +600,7 @@ func (v BodyValidator) ValidateWithBadge(r *http.Request, b *credentialing.Badge
 	requestBody := bodyBuilder()
 
 	decoder := json.NewDecoder(bytes.NewReader(body))
-	// TODO (CS-1278): We may want to strictly validate inference request body parameteres using a known allow list.
+	decoder.DisallowUnknownFields()
 
 	if err := decoder.Decode(&requestBody); err != nil {
 		return newValidationError(ErrInvalidJSON, "failed to decode request body: "+err.Error())
