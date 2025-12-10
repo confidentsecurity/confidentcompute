@@ -281,6 +281,11 @@ install -m 0755 -D /tmp/system_conf.sh /mnt/aux/opt/confidentsec/bin/system_conf
 install -m 0644 -D /tmp/system_conf.service /mnt/aux/etc/systemd/system/system_conf.service
 systemctl --root=/mnt/aux enable system_conf.service
 
+# wait-for-nvidia-driver-init.service
+install -m 0755 -D /tmp/wait-for-nvidia-driver-init.sh /mnt/aux/opt/confidentsec/bin/wait-for-nvidia-driver-init.sh
+install -m 0644 -D /tmp/wait-for-nvidia-driver-init.service /mnt/aux/etc/systemd/system/wait-for-nvidia-driver-init.service
+systemctl --root=/mnt/aux enable wait-for-nvidia-driver-init.service
+
 # compute_boot.service
 install -m 0644 -D /tmp/compute_boot.service /mnt/aux/etc/systemd/system/compute_boot.service
 mkdir -p /mnt/aux/etc/systemd/system/compute_boot.service.d

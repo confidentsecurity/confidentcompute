@@ -1,0 +1,20 @@
+[Unit]
+Description=Wait until the nvidia driver initialized all GPUs
+Before=nvidia-persistenced.service
+Before=nvidia-fabricmanager.service
+# copied from nvidia-fabricmanager and nvidia-persistenced
+After=network-online.target
+After=syslog.target
+Requires=network-online.target
+
+[Service]
+User=root
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/opt/confidentsec/bin/wait-for-nvidia-driver-init.sh
+TimeoutSec=120
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

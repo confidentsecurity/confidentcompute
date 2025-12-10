@@ -349,6 +349,8 @@ build {
       "provisioners/files/after_system_conf.conf",
       "provisioners/files/system.conf",
       "provisioners/files/system_conf.service",
+      "provisioners/files/wait-for-nvidia-driver-init.sh",
+      "provisioners/files/wait-for-nvidia-driver-init.service",
     ]
     destination = "/tmp/"
   }
